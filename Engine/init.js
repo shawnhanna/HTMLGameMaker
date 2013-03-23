@@ -40,17 +40,22 @@ function gameLoop()
 		{
 			clearInterval(IntervalID);
 		}
-
-		
-
 		ctx.fillStyle = "rgb(255,255,255)";
 		ctx.fillRect(0, 0,600,600);
-		
-		
 		
 		for(var i = 0; i < SceneGraph.length; i++)
 		{
 			SceneGraph[i].Update(ctx);
+			
+			if (_selectedObject != null)
+			{
+				ctx.beginPath();
+				ctx.rect(_selectedObject.transform.Position.x,_selectedObject.transform.Position.y,
+					_selectedObject.Collider.w, _selectedObject.Collider.h);
+				ctx.lineWidth = 2;
+				ctx.strokeStyle = "black";
+				ctx.stroke();
+			}
 			
 			for (var j = 0; j < SceneGraph.length; j++)
 			{
