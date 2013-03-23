@@ -1,18 +1,13 @@
 {
 	"object1": 
 	{
-		"blueprint": "thing.json",
+		"blueprint": "bp.json",
 		"transform":
 		{
 			"Position":
 			{
 				"x": "100",
 				"y": "100"
-			},
-			"Velocity":
-			{
-				"x": "0",
-				"y": "0"
 			}
 		}
 	},
@@ -25,11 +20,6 @@
 			{
 				"x": "150",
 				"y": "40"
-			},
-			"Velocity":
-			{
-				"x": "0",
-				"y": "0"
 			}
 		}
 	},
@@ -42,11 +32,6 @@
 			{
 				"x": "20",
 				"y": "100"
-			},
-			"Velocity":
-			{
-				"x": "0",
-				"y": "0"
 			}
 		}
 	}

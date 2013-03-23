@@ -38,7 +38,7 @@ function GameObjectFactory(filename)
 			// return gameObject;
 		// }
 	// }
-	request.open("GET", "Engine/"+filename, false);
+	request.open("GET", "blueprints/"+filename, false);
 	request.send();
 	var jObject = JSON.parse(request.responseText);
 	for (component in jObject)
@@ -50,6 +50,7 @@ function GameObjectFactory(filename)
 		if (component == "transform")
 		{
 			gameObject.transform.Position.construct(jObject["transform"]["Position"]["x"], jObject["transform"]["Position"]["y"]);
+			gameObject.transform.Velocity.construct(jObject["transform"]["Velocity"]["x"], jObject["transform"]["Velocity"]["y"]);
 		}
 		else if (component == "texture")
 		{
