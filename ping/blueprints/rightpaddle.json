@@ -1,0 +1,1 @@
+{"tag":"right","transform":{"Position":{"x":"500","y":"150"},"Velocity":{"x":"0","y":"0"}},"texture":{"src":"right.png"},"functs":{"OnInit":"","OnCollide":"","OnUpdate":"var isPressed = Input.getKey(73)\nif (isPressed){\nthis.transform.Position.y += -10;\n}\nvar isPressed = Input.getKey(75)\nif (isPressed){\nthis.transform.Position.y += 10;\n}\n"},"sound":{"src":"beep.wav"}}

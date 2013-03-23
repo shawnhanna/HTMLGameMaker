@@ -1,0 +1,29 @@
+{
+	"tag": "left",
+	"transform": {
+		"Position":
+		{
+			"x":"20",
+			"y":"150"
+		},
+		"Velocity":
+		{
+			"x":"0",
+			"y":"0"
+		}
+	},
+	"texture":
+	{
+		"src":"left.png"
+	},
+	"functs":
+	{
+		"OnInit":"",
+		"OnCollide":"",
+		"OnUpdate":"if (Input.getKey(87)){this.transform.Position.y-=10;} if (Input.getKey(83)){this.transform.Position.y+=10;}"
+	},
+	"sound":
+	{
+		"src":"beep.wav"
+	}
+}

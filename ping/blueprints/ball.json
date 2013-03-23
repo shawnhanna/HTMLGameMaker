@@ -1,0 +1,25 @@
+{
+	"tag": "ball",
+	"transform": {
+		"Position":
+		{
+			"x":"270",
+			"y":"200"
+		},
+		"Velocity":
+		{
+			"x":"10",
+			"y":"10"
+		}
+	},
+	"texture":
+	{
+		"src":"right.png"
+	},
+	"functs":
+	{
+		"OnInit":"",
+		"OnCollide":"",
+		"OnUpdate":""
+	}
+}
