@@ -17,64 +17,12 @@ var _selectedBlueprint = null;
 // Variable that sets which event you are currently editing, such as "onCollide", "onInit", and "onUpdate"
 var _currentlyChanging = null;
 
-function instantiateObject(argument) {
-	if (argument == null)
-	{
-		alert("ERROR: instantiateObject run w/o a selected blueprint");
-		return false;
-	}
-	else
-	{
-		///TODO: add instantiation code
-		//load from json file
-		//return gameObject
-	}
+//object that holds all the json properties
+var o;
+
+function changeEditingState (state) {
+	_currentlyChanging = state;
 }
-
-function destroySelf ()
-{
-	if (this == null)
-	{
-		alert("ERROR: destroy self run w/o a self object");
-		return false;
-	}
-	else
-	{
-		this.doRemove = true;
-	}
-}
-
-function destroyCollider ()
-{
-	if (collidingObject == null)
-	{
-		alert("ERROR: destroy collider run w/o a collidingObject");
-		return false;
-	}
-	else
-	{
-		collidingObject.doRemove = true;
-	}
-}
-
-function setOnCollide()
-{
-	if (_selectedBlueprint == null)
-	{
-		alert("ERROR: setOnCollide run w/o a selected blueprint");
-		return false;
-	}
-	else
-	{
-		$('#test').off('onCollide');
-		$("#test").on("onCollide", function()
-		{
-			eval($("#text").val());
-		});
-	}
-}
-
-
 
 function setVelocityX(speed)
 {
@@ -333,8 +281,6 @@ function redrawTextArea()
 
 /// saves the callback functions to the callbacks
 function save () {
-	saveJSON();
-	return false;
 	createArray();
 
 	if(_currentlyChanging != null)
@@ -389,41 +335,42 @@ function load () {
 	}
 }
 
-function createBlueprint (argument) {
-	var name = prompt("What is the name of your blueprint");
+function createBlueprint () {
+	var name = prompt("What is the name of your blueprint"," hi?");
 	if (name != null)
 	{
 		_selectedBlueprint = name;
-		saveJSON();
 
 		o = {
-		"tranform":
-		{
-			"Position":
+			"tranform":
 			{
-				"x":0,
-				"y":0
+				"Position":
+				{
+					"x":0,
+					"y":0
+				},
+				"Velocity":
+				{
+					"x":0,
+					"y":0
+				}
 			},
-			"Velocity":
+			"texture":
 			{
-				"x":0,
-				"y":0
+				"src":"img.png"
+			},
+			"funct":
+			{
+				"OnCollide":"",
+				"OnInit":"",
+				"OnUpdate":""
 			}
-		},
-		"texture":
-		{
-			"src":"img.png"
-		},
-		"funct":
-		{
-			"OnCollide":"",
-			"OnInit":"",
-			"OnUpdate":""
 		}
-	}
+		saveJSON();
+
 	}
 }
-var o;
+
 ///save blueprint in json format
 function saveJSON (argument) {
 	str = JSON.stringify(o);
@@ -440,7 +387,6 @@ function loadJSON (filename) {
 		{
 			var jObject = JSON.parse(request.responseText);
 			o = jObject;
-
 		}
 	}
 	request.open("GET", filename, true);
