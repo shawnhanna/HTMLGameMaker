@@ -22,7 +22,7 @@ app.post('/saveScene', function(req, res)
 		if (err) { console.log(err);}
 	});
 	res.end();
-}
+});
 
 app.get('/getBP', function(req, res) {
 	var allfiles = [];
