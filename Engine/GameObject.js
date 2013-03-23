@@ -2,25 +2,68 @@ function GameObject()
 {
 	var components = new Array();
 	this.transform = new Transform();
-	var texture = new Texture2D();
-	texture.load("img.png");
-	components.push(texture);
+	this.Collider = new Rect();
+	
+	var oncollide;
+	var onupdate;
+	var oninit;
+	
+	this.setOnCollide = function(funct)
+	{
+		oncollide = funct;
+	}
+	this.setOnUpdate = function(funct)
+	{
+		onupdate = funct;
+	}
+	this.setOnInit = function(funct)
+	{
+		oninit = funct;
+	}
+	this.getOnInit = function()
+	{
+		return oninit;
+	}
+	this.getOnUpdate = function()
+	{
+		return onupdate;
+	}
+	this.getOnCollide = function()
+	{
+		return oncollide;
+	}
 
+	this.addComponent = function(component)
+	{
+		components.push(component);
+	}
+	
 	this.Init = function()
 	{
-		components[0].Init(this);
-		for (component in components)
+		for (var i = 0; i < components.length; i++)
 		{
-			//component.Init(this);
+			components[i].Init(this);
 		}
+		eval(oninit);
 	}
 	
 	this.Update = function(ctx)
 	{
-		components[0].Update(ctx);
-		for (component in components)
+		this.Collider.x = parseInt(this.transform.Position.x);
+		this.Collider.y = parseInt(this.transform.Position.y);
+		this.Collider.w = components[0].getWidth();
+		this.Collider.h = components[0].getHeight();
+		
+		for (var i = 0; i < components.length; i++)
 		{
-			//component.Update(ctx);
+			components[i].Update(ctx);
 		}
+		this.transform.Position.plus(this.transform.Velocity);
+		eval(onupdate);
+	}
+	
+	this.OnCollide = function()
+	{
+		eval(oncollide);
 	}
 }
