@@ -1,3 +1,4 @@
+
 {
 "tag":"bullet",
 "transform":
@@ -11,3 +12,4 @@
 "OnUpdate": "if (this.transform.Position.y < 0) { this.doRemove = true;}"
 }
 }
+

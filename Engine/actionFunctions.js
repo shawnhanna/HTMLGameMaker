@@ -84,9 +84,25 @@ function blueprintSelected (argument) {
 	str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
 	str += '</tr><tr><td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
 	str += '<td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
-	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
+	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td>';
+	str += '<td><button id="changeImageButton" type="file" class="btn btn-inverse what" onclick=\'changeImage();\'>Change default Image</button></td></tr>';
+	str += '</tbody></table>';
 	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
+}
+
+function changeImage () {
+	load();
+	var ret = prompt("Please enter an image filename","");
+	if (_selectedBlueprint)
+	{
+		o["texture"]["src"] = ret;
+	}
+	else if (_selectedObject)
+	{
+		_selectedObject.texture.img = ret;
+	}
+	save();
 }
 
 function showUpdateButtons (argument) {
@@ -270,7 +286,7 @@ function addInstantiateObject() {
 	}
 	if (blueprint != "")
 	{
-		$("#text").val ( $("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
+		$("#text").val ($("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
 		createArray();
 		showInstantiated();
 	}
@@ -443,28 +459,30 @@ function save () {
 
 ///Loads the callback functions that they are currently 
 function load () {
-	if(_currentlyChanging != null)
-	{
-		if (_selectedObject){
-			if (_currentlyChanging == "collide")
-			{
-				$("#text").val(_selectedObject.getOnCollide());
-			}
-			else if(_currentlyChanging == "init")
-			{
-				$("#text").val(_selectedObject.getOnInit());
-			}
-			else if(_currentlyChanging == "update"){
-				$("#text").val(_selectedObject.getOnUpdate());
-			}
-			createArray();
-			return true;
-		}
-		else if (_selectedBlueprint)
+	if (_selectedObject){
+		if (_currentlyChanging == "collide")
 		{
-			console.log("bp = "+_selectedBlueprint);
-			$.get("blueprints/"+_selectedBlueprint+".json", function(data) {
-				o = data;
+			$("#text").val(_selectedObject.getOnCollide());
+		}
+		else if(_currentlyChanging == "init")
+		{
+			$("#text").val(_selectedObject.getOnInit());
+		}
+		else if(_currentlyChanging == "update"){
+			$("#text").val(_selectedObject.getOnUpdate());
+		}
+		createArray();
+		return true;
+	}
+	else if (_selectedBlueprint)
+	{
+		console.log("bp = "+_selectedBlueprint);
+		$.ajax({
+			url:    'blueprints/'+_selectedBlueprint+".json",
+			dataType: 'json',
+			success: function(result) {
+				//alert("Got data: "+result);
+				o = result;
 				if (_currentlyChanging == "collide")
 				{
 					$("#text").val(o["functs"]["OnCollide"]);
@@ -477,14 +495,10 @@ function load () {
 					$("#text").val(o["functs"]["OnUpdate"]);
 				}
 				createArray();
-			});
-			return true;
-		}
-	}
-	else
-	{
-		alert("Error: no callback function overwriting specified");
-		return false;
+			},
+			async:   false
+		});
+		return true;
 	}
 }
 
@@ -497,6 +511,7 @@ function changeName() {
 }
 
 function changeTag() {
+	load();
 	var newTag = prompt("what is the new tag", o["tag"]);
 	if (newTag != o["tag"])
 	{
@@ -506,6 +521,7 @@ function changeTag() {
 }
 
 function changeInitVelocity() {
+	load();
 	var newVelX = prompt("what is the new velocity (X)", o["transform"]["Velocity"]["x"]);
 	var newVelY = prompt("what is the new velocity (Y)", o["transform"]["Velocity"]["y"]);
 	o["transform"]["Velocity"]["y"] = newVelY;
@@ -514,6 +530,7 @@ function changeInitVelocity() {
 }
 
 function changeInitPosition() {
+	load();
 	var newVelX = prompt("what is the new position (X)", o["transform"]["Position"]["x"]);
 	var newVelY = prompt("what is the new position (Y)", o["transform"]["Position"]["y"]);
 	o["transform"]["Position"]["y"] = newVelY;
@@ -611,16 +628,16 @@ function redrawBlueprints (bps) {
 		for (var i = bps.length - 1; i >= 0; i--) {
 			bps[i] = bps[i].substr(0, bps[i].length-5);
 			str += '<li><a href="#" onclick=\'blueprintSelected("';
-			str+=bps[i];
-			str += '")\'>'+bps[i]+"</a></li>";
-		};
-		str += "</ul>";
-	}
-	else
-	{
-		alert("NO blueprints found");
-	}
-	document.getElementById('right').innerHTML = str;
+				str+=bps[i];
+				str += '")\'>'+bps[i]+"</a></li>";
+};
+str += "</ul>";
+}
+else
+{
+	alert("NO blueprints found");
+}
+document.getElementById('right').innerHTML = str;
 }
 
 function getSceneGraph (argument) {
@@ -632,19 +649,19 @@ function getSceneGraph (argument) {
 		for (var i = SceneGraph.length - 1; i >= 0; i--) {
 			var tempName = SceneGraph[i].blueprint.substr(0, SceneGraph[i].blueprint.length-5);
 			str += '<tr><td><a href="#" onclick=\'objectSelectedIndex("';
-			str += i;
-			str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
-			str += '<td><a href="#" onclick=\'deleteObjectIndex("';
-			str += i;
-			str += '")\'>remove</a></td></tr>';
-		};
-		str += "</table>";
-		document.getElementById('left').innerHTML = str;
-	}
-	else
-	{
-		alert("NO objects found");
-	}
+				str += i;
+				str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
+str += '<td><a href="#" onclick=\'deleteObjectIndex("';
+	str += i;
+	str += '")\'>remove</a></td></tr>';
+};
+str += "</table>";
+document.getElementById('left').innerHTML = str;
+}
+else
+{
+	alert("NO objects found");
+}
 }
 
 function getBP () {
@@ -654,5 +671,5 @@ function getBP () {
 }
 
 function displayValues () {
-	
+
 }
