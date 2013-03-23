@@ -24,7 +24,6 @@
 			{
 				if (state == "init" || state == "collide" || state == "update")
 				{
-					changeEditingState(state);
 
 						str = '<table class="table-nonfluid">';
 						str += '<tbody><tr><td><button id="addVelX" class="btn btn-inverse what" onclick="addVelX();">Set velocity X</button></td><td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity Y</button></td><td><button id="addVelA" class="btn btn-inverse what"onclick="addVelAngle();">Set velocity (speed & angle in radians)</button><td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos X</button></td><td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos Y</button></td></tr>'
@@ -35,6 +34,7 @@
 
 						str += '<tr><td><button class="btn btn-inverse what" onclick=\'changeEditingState("collide");\'>Modify oncollide</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("init");\'>Modify oninit</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("update");\'>Modify onupdate</button></td></tr></tbody></table>';
 					document.getElementById('buttonsDiv').innerHTML = str;
+					changeEditingState(state);
 				}
 			}
 		}
