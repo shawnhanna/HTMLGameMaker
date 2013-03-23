@@ -353,17 +353,35 @@ function save () {
 	{
 		if (_currentlyChanging == "collide")
 		{
-			this.setOnCollide($("#text").val());
-			o["funct"]["OnCollide"] = $("#text").val();
+			if (_selectedBlueprint)
+			{
+				o["funct"]["OnCollide"] = $("#text").val();
+			}
+			else
+			{
+				this.setOnCollide($("#text").val());
+			}
 		}
 		else if(_currentlyChanging == "init")
 		{
-			this.setOnInit($("#text").val());
-			o["funct"]["OnCollide"] = $("#text").val();
+			if (_selectedBlueprint)
+			{
+				o["funct"]["OnInit"] = $("#text").val();
+			}
+			else
+			{
+				this.setOnInit($("#text").val());
+			}
 		}
 		else if(_currentlyChanging == "update"){
-			this.setOnUpdate($("#text").val());
-			o["funct"]["OnCollide"] = $("#text").val();
+			if (_selectedBlueprint)
+			{
+				o["funct"]["OnUpdate"] = $("#text").val();
+			}
+			else
+			{
+				this.setOnUpdate($("#text").val());
+			}
 		}
 		else{
 			alert("error: not sure what callback we are creating");
@@ -408,14 +426,49 @@ function load () {
 	}
 }
 
-function createBlueprint () {
-	var name = prompt("What is the name of your blueprint"," hi?");
+function changeName() {
+	var newName = prompt("what is the new name", _selectedBlueprint);
+	if (newName != _selectedBlueprint)
+	{
+		_selectedBlueprint = newName;
+		createBlueprint(newName);
+	}
+}
+
+function changeTag() {
+	var newTag = prompt("what is the new tag", o["tag"]);
+	if (newTag != o["tag"])
+	{
+		o["tag"] = newTag;
+		saveJSON();
+	}
+}
+
+function changeInitVelocity() {
+	var newVelX = prompt("what is the new velocity (X)", o["transform"]["Velocity"]["x"]);
+	var newVelY = prompt("what is the new velocity (Y)", o["transform"]["Velocity"]["y"]);
+	o["transform"]["Velocity"]["y"] = newVelY;
+	o["transform"]["Velocity"]["x"] = newVelX;
+	saveJSON();
+}
+
+function createBlueprint (argument) {
+	var name = null;
+	if (argument != null)
+	{
+		name = argument;
+	}
+	else
+	{
+		name = prompt("What is the name of your blueprint","bp");
+	}
 	if (name != null)
 	{
 		_selectedBlueprint = name;
 
 		o = {
-			"tranform":
+			"tag":"none",
+			"transform":
 			{
 				"Position":
 				{
@@ -440,7 +493,6 @@ function createBlueprint () {
 			}
 		}
 		saveJSON();
-
 	}
 }
 
@@ -448,7 +500,7 @@ function createBlueprint () {
 function saveJSON (argument) {
 	str = JSON.stringify(o);
 	alert(str);
-	//save to file
+	//save to file, with name _selectedBlueprint
 }
 
 function loadJSON (filename) {
