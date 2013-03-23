@@ -402,17 +402,7 @@ function saveJSON (argument) {
 	str = JSON.stringify(o);
 	//alert(str);
 	//save to file
-	var form = document.getElementById("postForm");
-	console.log(form);
-	
-	var filename = document.getElementById("filename");
-	filename.setAttribute("value", "ddd.json");
-	
-	var data = document.getElementById("data");
-	data.setAttribute("value", "fsjeilfjselif");
-	
-	form.submit();
-
+	$.post("/", { filename: _selectedBlueprint, data: str});
 }
 
 function loadJSON (filename) {

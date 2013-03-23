@@ -1,6 +1,6 @@
 {
 	"name": "hello",
-	"description":"hello world test app",
+	"description":"htmlgamemaker",
 	"version": "0.0.1",
 	"private": true,
 	"dependencies": {
