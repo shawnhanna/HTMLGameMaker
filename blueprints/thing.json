@@ -1,1 +1,0 @@
-{"tag":"nothing","transform":{"Position":{"x":"10","y":"10"},"Velocity":{"x":"0","y":"0"}},"texture":{"src":"img.png"},"functs":{"OnInit":"console.log(\"init\");","OnUpdate":"console.log(\"update\"); if (Input.getKey(39)) { this.transform.Position.x--; }","OnCollide":"this.doRemove = true;\n"}}
