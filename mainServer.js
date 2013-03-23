@@ -15,6 +15,15 @@ app.post('/', function(req, res) {
 	res.end();
 });
 
+app.post('/saveScene', function(req, res)
+{
+	fs.writeFile("scene.json", req.body.data, function(err)
+	{
+		if (err) { console.log(err);}
+	});
+	res.end();
+}
+
 app.get('/getBP', function(req, res) {
 	var allfiles = [];
 	fs.readdir("blueprints/", function(err, files)
