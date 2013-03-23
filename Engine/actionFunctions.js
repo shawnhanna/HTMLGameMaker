@@ -1,13 +1,21 @@
 ///actionFunctions.js
 /// This file contains functions that modify the behavior of a game's objects
 
-
 var commandList = new Array();
+
+//this is set when an object is found to be colliding with the current selfObject. it is a reference to the offending object
 var collidingObject = null;
+//the reference to the object we are editing
 var selfObject = null;
 
+
 var _selectedObject = null;
+
+// Set this before changing a blueprint
 var _selectedBlueprint = null;
+
+// Variable that sets which event you are currently editing, such as "onCollide", "onInit", and "onUpdate"
+var _currentlyChanging = null;
 
 function instantiateObject() {
 	if (_selectedObject == null)
@@ -30,10 +38,9 @@ function destroySelf ()
 	}
 	else
 	{
-		//TODO: find out the destroy code
+		selfObject.doRemove = true;
 	}
 }
-
 
 function destroyCollider ()
 {
@@ -44,10 +51,9 @@ function destroyCollider ()
 	}
 	else
 	{
-		//TODO: find out the destroy code
+		collidingObject.doRemove = true;
 	}
 }
-
 
 function setOnCollide()
 {
@@ -78,7 +84,7 @@ function setVelocityX(speed)
 	else
 	{
 		///todo: fix to match engine
-		_selectedBlueprint.velocity.X = speed;
+		_selectedObject.velocity.X = speed;
 	}
 }
 
@@ -92,7 +98,7 @@ function setVelocityY(speed)
 	else
 	{
 		///todo: fix to match engine
-		_selectedBlueprint.velocity.Y = speed;
+		_selectedObject.velocity.Y = speed;
 	}
 }
 
@@ -116,6 +122,36 @@ function setVelocity(speed, radians)
 		return false;
 	}
 }
+
+
+function setRelativePositionX(position)
+{
+	if (_selectedObject == null)
+	{
+		alert("ERROR: setRelativePositionX run w/o a selected object");
+		return false;
+	}
+	else
+	{
+		///todo: fix to match engine
+		_selectedObject.position.X = _selectedObject.position.X + position;
+	}
+}
+
+function setRelativePositionY(position)
+{
+	if (_selectedObject == null)
+	{
+		alert("ERROR: setRelativePositionY run w/o a selected object");
+		return false;
+	}
+	else
+	{
+		///todo: fix to match engine
+		_selectedObject.position.Y = _selectedObject.position.Y + position;
+	}
+}
+
 
 function reverseVelX ()
 {
@@ -141,6 +177,24 @@ function reverseVelY ()
 	{
 		_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
 	}
+}
+
+function addPosRelativeX () {
+	newPos = prompt("Enter a new position x (relative to the current position)", "0");
+	$("#text").val ( $("#text").val() + "setRelativePositionX("+newPos+");");
+	createArray();
+}
+function addPosRelativeY () {
+	newPos = prompt("Enter a new position y (relative to the current position)", "0");
+	$("#text").val ( $("#text").val() + "setRelativePositionY("+newPos+");");
+	createArray();
+}
+
+function addVelY () {
+	//velocity = $("#addVelX").val();
+	velocity = prompt("Enter a velocity", "0");
+	$("#text").val ( $("#text").val() + "setVelocityY("+velocity+");");
+	createArray();
 }
 
 
@@ -187,6 +241,7 @@ function addInstantiateObject() {
 	if (blueprint != "")
 	{
 		$("#text").val ( $("#text").val() + "var x = instantiateObject(\""+blueprint+"\");");
+		$("#text").val ( $("#text").val() + "GameObjectFactory(\""+blueprint+".json\", "+getSceneGraph()+")");
 		createArray();
 		showInstantiated();
 	}
@@ -224,7 +279,7 @@ function createArray () {
 }
 
 function getFunctionFromCommands() {
-	return function() { $("#text").val(); };
+	return $("#text").val();
 }
 
 function addInputKeyDown () {
@@ -277,4 +332,58 @@ function redrawTextArea()
 	for (var i = 0; i<commandList.length; i++) {
 		$("#text").val( $("#text").val() + commandList[i] + "\n");
 	};
+}
+
+function save () {
+	createArray();
+
+	if(_currentlyChanging != null)
+	{
+		if (_currentlyChanging == "onCollide")
+		{
+			selfObject.onCollide = $("#text").val();
+		}
+		else if(_currentlyChanging == "onInit")
+		{
+			selfObject.onInit = $("#text").val();
+		}
+		else if(_currentlyChanging == "onUpdate"){
+			selfObject.onUpdate = $("#text").val();
+		}
+		else{
+			alert("error: not sure what callback we are creating");
+		}
+	}
+	else
+	{
+		alert("Error: no callback function overwriting specified");
+	}
+}
+
+function load () {
+	if(_currentlyChanging != null)
+	{
+		if (_currentlyChanging == "onCollide")
+		{
+			$("#text").val(selfObject.onCollide);
+		}
+		else if(_currentlyChanging == "onInit")
+		{
+			$("#text").val(selfObject.onInit);
+		}
+		else if(_currentlyChanging == "onUpdate"){
+			$("#text").val(selfObject.onUpdate);
+		}
+		else{
+			alert("error: not sure what callback we are creating");
+			return false;
+		}
+		createArray();
+		return true;
+	}
+	else
+	{
+		alert("Error: no callback function overwriting specified");
+		return false;
+	}
 }

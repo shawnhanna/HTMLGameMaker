@@ -20,13 +20,15 @@
 <body onload="hideInstantiated()">
 
 <div id="editingArea">
-<textarea id="text" rows="10" cols="50">
+<textarea id="text" rows="20" cols="50">
 </textarea>
 
 <br>
 <button id="addVelX" onclick="addVelX();">Set velocity (x)</button>
 <button id="addVelY" onclick="addVelY();">Set velocity (y)</button>
 <button id="addVelA" onclick="addVelAngle();">Set velocity (speed & angle in radians)</button>
+<button id="addPosRelX" onclick="addPosRelativeX();">Set relative pos (x)</button>
+<button id="addPosRelY" onclick="addPosRelativeY();">Set relative pos (y)</button>
 <br>
 <button id="reverseXButton" onclick="reverseX();">Reverse velocity (x)</button>
 <button id="reverseYButton" onclick="reverseY();">Reverse velocity (y)</button>
@@ -42,7 +44,7 @@
 <button id="destroySelf" onclick="addDestroySelf();">Destroy self</button>
 <br>
 <!-- Only if in Collider Set of buttons -->
-<button id="ifColliderTag" onclick="addIfColliderTag();">if (collider tag == ''){} </button>
+<button id="ifColliderTag" onclick="addIfColliderTag();">if (collider.tag == ''){} </button>
 <button id="destroyCollider" onclick="addDestroyCollider();">Destroy collider</button>
 
 <br>
@@ -51,6 +53,8 @@
 
 <br>
 <button onclick="endIf()">End If</button>
+<br>
+<button onclick="save()">Save</button>
 </div>
 </body>
 </html>
