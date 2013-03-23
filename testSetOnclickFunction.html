@@ -1,0 +1,19 @@
+<html>
+<head>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+	function myFunction()
+	{
+		$('#test').unbind('click');
+		$("#test").click(function(){eval($("#text").val());});
+	}
+	</script>
+</head>
+<body>
+<textarea id="text">
+</textarea>
+<button id="test">Test</button>
+<button onclick="myFunction()">Click me</button>
+</body>
+</html>

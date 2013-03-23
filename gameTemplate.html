@@ -1,0 +1,107 @@
+<html>
+<head>
+	<script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript">
+
+	var PI = 3.14159;
+
+	function myFunction()
+	{
+		$('#test').unbind('click');
+		$("#test").click(function(){eval($("#text").val());});
+	}
+
+	var _selectedBlueprint = null;
+	function setVelocityX(speed)
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			///todo: fix to match engine
+			_selectedBlueprint.velocityX = speed;
+		}
+	}
+
+	function setVelocityY(speed)
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setVelocityY run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			///todo: fix to match engine
+			_selectedBlueprint.velocityY = speed;
+		}
+	}
+
+	function setVelocity(speed, radians)
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			if (setVelocityX(speed*Math.cos(radians)))
+			{
+				if (setVelocityY(speed*Math.sin(radians)))
+				{
+					return true;
+				}
+			}
+			alert("ERROR setting velocity with speed = "+speed + " and radians = " + radians);
+			return false;
+		}
+	}
+
+	function setOnCollide()
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setOnCollide run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			$('#test').off('onCollide');
+			$("#test").on("onCollide", function()
+			{
+				eval($("#text").val());
+				alert(	)
+			});
+		}
+	}
+
+	function addVelX () {
+		//velocity = $("#addVelX").val();
+		velocity = prompt("Enter a velocity", "0");
+		$("#text").append("setVelocityX("+velocity+");\n");
+	}
+
+	</script>
+</head>
+<body>
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
+</canvas>
+
+<div id="editingArea">
+
+<textarea id="text" rows="10" cols="20">Type function here, or click one of the buttons to the right
+
+</textarea>
+<button id="addVelX" onclick="addVelX();">Set velocity (x)</button>
+<button id="addVelY" onclick="addVelY()">Set velocity (y)</button>
+<button id="addVelA" onclick="addVelAngle()">Set velocity (speed & angle in radians)</button>
+<button onclick="myFunction()">Click me</button>
+</div>
+</body>
+</html>
