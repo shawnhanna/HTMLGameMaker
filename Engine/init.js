@@ -1,9 +1,6 @@
 var ctx;
 
 var SceneGraph = new Array();
-SceneGraph.push(new GameObject());
-SceneGraph.push(new GameObject());
-SceneGraph.push(new GameObject());
 
 function init()
 {
@@ -11,19 +8,38 @@ function init()
 	var context = document.getElementById("canvas");
 	ctx = context.getContext('2d');
 	
-	for (var i = 0; i < SceneGraph.length; i++)
-	{
-		SceneGraph[i].Init();
-	}
-	SceneGraph[0].transform.Position.construct(40,50);
-	SceneGraph[1].transform.Position.construct(100,100);
+	Input.Init();
+	
+	GameObjectFactory("thing.json", SceneGraph);
+	GameObjectFactory("thing2.json", SceneGraph);
 	
 	setInterval(gameLoop, 1000 / 30);
+	
 }
 
 function gameLoop()
 {
+	Input.Update();
 	
+	if (Input.getKey(38))
+	{
+		SceneGraph[0].transform.Position.y--;
+	}
+	if (Input.getKey(40))
+	{
+		SceneGraph[0].transform.Position.y++;
+	}
+	if (Input.getKey(39))
+	{
+		SceneGraph[0].transform.Position.x++;
+	}
+	if (Input.getKey(37))
+	{
+		SceneGraph[0].transform.Position.x--;
+	}
+
+	
+
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillRect(0, 0,600,600);
 	

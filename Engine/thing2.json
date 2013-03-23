@@ -3,12 +3,12 @@
   {
 	"Position":
 	{
-		"x": "10",
-		"y": "10"
+		"x": "100",
+		"y": "100"
 	}
   },
   "texture":
   {
-	"src":"img.png"
+	"src":"img2.png"
   }
 }

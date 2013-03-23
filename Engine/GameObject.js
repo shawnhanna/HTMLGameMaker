@@ -3,24 +3,25 @@ function GameObject()
 	var components = new Array();
 	this.transform = new Transform();
 	var texture = new Texture2D();
-	texture.load("img.png");
-	components.push(texture);
 
+	this.addComponent = function(component)
+	{
+		components.push(component);
+	}
+	
 	this.Init = function()
 	{
-		components[0].Init(this);
-		for (component in components)
+		for (var i = 0; i < components.length; i++)
 		{
-			//component.Init(this);
+			components[i].Init(this);
 		}
 	}
 	
 	this.Update = function(ctx)
 	{
-		components[0].Update(ctx);
-		for (component in components)
+		for (var i = 0; i < components.length; i++)
 		{
-			//component.Update(ctx);
+			components[i].Update(ctx);
 		}
 	}
 }
