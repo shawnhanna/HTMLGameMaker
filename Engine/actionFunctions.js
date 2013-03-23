@@ -102,6 +102,8 @@ function blueprintSelected (argument) {
 	str += '</tbody></table>';
 	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
+
+	load();
 }
 
 function changeImage () {
