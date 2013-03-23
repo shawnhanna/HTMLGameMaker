@@ -7,16 +7,20 @@ app.use(express.bodyParser());
 app.use(express['static'](__dirname));
 
 app.post('/', function(req, res) {
-	console.log(req.body.filename);
 	fs.writeFile("blueprints/" + req.body.filename, req.body.data, function(err) {
 		if (err) {
 			console.log(err);
 		}
-		else {
-			console.log("The File was saved!");
-		}
 	});
 	res.end();
+});
+
+app.get('/getBP', function(req, res) {
+	var allfiles = [];
+	fs.readdir("blueprints/", function(err, files)
+	{
+		res.send(JSON.stringify(files));
+	});
 });
 
 app.listen(8080);
