@@ -320,7 +320,6 @@ function changeName() {
 	if (newName != _selectedBlueprint)
 	{
 		_selectedBlueprint = newName;
-		createBlueprint(newName);
 	}
 }
 
@@ -442,11 +441,11 @@ function loadJSON (filename) {
 
 function redrawBlueprints (bps) {
 	str = "<h2>Blueprints</h2><br>";
-	str += '<button onclick='updateButtons("create_blueprint");'>Create blueprint</button><br>';
+	str += '<button onclick=\'updateButtons("create_blueprint");\'>Create blueprint</button><br>';
 	str += "<ul>";
 	for (var i = bps.length - 1; i >= 0; i--) {
 		str += "<li>"+bps[i]+"</li>";
 	};
 	str += "</ul>";
-	document.getElementById('bpdiv').innerHTML = 
+	document.getElementById('right').innerHTML = str;
 }
