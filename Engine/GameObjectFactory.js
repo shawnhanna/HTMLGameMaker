@@ -5,7 +5,7 @@ function GameObjectFactory(filename)
 	var gameObject = new GameObject();
 	
 	gameObject.blueprint = filename;
-	request.open("GET", "blueprints/"+filename, false);
+	request.open("GET", gameDir + "blueprints/"+filename, false);
 	request.send();
 	var jObject = JSON.parse(request.responseText);
 	for (component in jObject)
@@ -39,7 +39,7 @@ function GameObjectFactory(filename)
 		{
 			if (jObject["sound"] != null){
 			var sound = document.createElement("Audio");
-			sound.src = "Engine/" + jObject["sound"]["src"];
+			sound.src = gameDir + jObject["sound"]["src"];
 			
 			gameObject.sound = sound;
 			}

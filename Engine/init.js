@@ -9,6 +9,8 @@ var lastFrameTime = 0;
 var currentFrameTime = 0;
 var delta = 0;
 
+var gameDir = "galga/";
+
 function init()
 {
 	var stopped = false;
@@ -16,12 +18,12 @@ function init()
 	ctx = context.getContext('2d');
 	
 	var sound = document.createElement("Audio");
-	sound.src = "Engine/OOUUTSIDER.mp3";
+	sound.src = gameDir + "OOUUTSIDER.mp3";
 	setTimeout(function() {sound.play();}, 5000);
 	
 	
 	SceneGraph.splice(0, SceneGraph.length);
-	loadScene("Engine/scene.json");
+	loadScene(gameDir + "scene.json");
 	if (IntervalID == null)
 	{
 		Input.Init();

@@ -514,7 +514,7 @@ function load () {
 	{
 		
 		$.ajax({
-			url:    'blueprints/'+_selectedBlueprint+".json",
+			url:    gameDir + 'blueprints/'+_selectedBlueprint+".json",
 			dataType: 'json',
 			success: function(result) {
 				//alert("Got data: "+result);
@@ -627,7 +627,7 @@ function createBlueprint (argument) {
 function saveScene(argument)
 {
 	var toSend = JSON.stringify(SceneGraph);
-	$.post("/saveScene", {data: toSend});
+	$.post("/saveScene", {data: toSend, game: gameDir});
 }
 
 ///save blueprint in json format
@@ -652,7 +652,7 @@ function saveJSON (argument) {
 	str = JSON.stringify(o);
 	//alert(str);
 	//save to file
-	$.post("/", { filename: "/"+_selectedBlueprint+".json", data: str});
+	$.post("/", { filename: _selectedBlueprint+".json", data: str, game: gameDir});
 }
 
 function redrawBlueprints (bps) {
@@ -698,11 +698,14 @@ else
 	alert("NO objects found");
 }
 }
-
+var gottenBP = false;
 function getBP () {
-	$.get("/getBP", function(data){
-		redrawBlueprints(data);
-	});
+	if (!gottenBP){
+		$.get("/getBP?game="+gameDir, function(data){
+			redrawBlueprints(data);
+			gottenBP = true;
+		});
+	}
 }
 
 function displayValues () {

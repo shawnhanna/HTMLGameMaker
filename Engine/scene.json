@@ -1,1 +1,1 @@
-[{"blueprint":"ship.json","transform":{"Position":{"x":191,"y":331},"Velocity":{"x":0,"y":0}},"Collider":{"x":191,"y":331,"w":40,"h":45},"doRemove":false,"tag":""},{"blueprint":"spawner.json","transform":{"Position":{"x":537,"y":397},"Velocity":{"x":0,"y":0}},"Collider":{"x":537,"y":397,"w":32,"h":32},"doRemove":false,"tag":""}]
+[{"blueprint":"ball.json","transform":{"Position":{"x":7500,"y":7430},"Velocity":{"x":10,"y":10}},"Collider":{"x":7490,"y":7420,"w":32,"h":80},"doRemove":false,"tag":"ball"}]

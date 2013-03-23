@@ -7,7 +7,7 @@ app.use(express.bodyParser());
 app.use(express['static'](__dirname));
 
 app.post('/', function(req, res) {
-	fs.writeFile("blueprints/" + req.body.filename, req.body.data, function(err) {
+	fs.writeFile(req.body.game + "blueprints/" + req.body.filename, req.body.data, function(err) {
 		if (err) {
 			console.log(err);
 		}
@@ -17,7 +17,7 @@ app.post('/', function(req, res) {
 
 app.post('/saveScene', function(req, res)
 {
-	fs.writeFile("Engine/scene.json", req.body.data, function(err)
+	fs.writeFile(req.body.game + "scene.json", req.body.data, function(err)
 	{
 		if (err) { console.log(err);}
 	});
@@ -26,7 +26,7 @@ app.post('/saveScene', function(req, res)
 
 app.get('/getBP', function(req, res) {
 	var allfiles = [];
-	fs.readdir("blueprints/", function(err, files)
+	fs.readdir(req.query.game + "blueprints/", function(err, files)
 	{
 		res.send(JSON.stringify(files));
 	});
