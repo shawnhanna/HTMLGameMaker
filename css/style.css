@@ -51,15 +51,26 @@ body{
 #textEdit
 {
 	float:left;
-	margin-left: 5%;
+	margin-left: 1%;
+	margin-right: 2%;
+	padding-top:20px;
+}
+
+#textEditR
+{
+	position:absolute;
+	float:right;
+	bottom:-110px;
+	margin-left: 1400px;
 	margin-right: 5%;
 	padding-top:20px;
 }
 
 .right
 {
-	border:15px black;
+	border:15px black; 	
 	position:relative;
+	
 	//width:350px;
 	//height:560px;
 	width:20%;
@@ -135,6 +146,12 @@ body{
 	-webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 		-moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
 			box-shadow: 0 1px 4px rgba(0, 0, 0, 0.065);
+}
+
+.butttonsDivv
+{
+	width:300px;
+	text-align:center;
 }
 a.brand{
 	margin-left: 10px;
