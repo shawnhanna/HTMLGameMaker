@@ -288,16 +288,23 @@ function save () {
 		if (_currentlyChanging == "onCollide")
 		{
 			this.setOnCollide($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "onInit")
 		{
 			this.setOnInit($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "onUpdate"){
 			this.setOnUpdate($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
 		else{
 			alert("error: not sure what callback we are creating");
+		}
+		if (_selectedBlueprint)
+		{
+			saveJSON();
 		}
 	}
 	else
