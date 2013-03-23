@@ -8,7 +8,7 @@ var collidingObject = null;
 //the reference to the object we are editing
 var selfObject = null;
 
-
+//the selected object for editing
 var _selectedObject = null;
 
 // Set this before changing a blueprint
@@ -17,28 +17,30 @@ var _selectedBlueprint = null;
 // Variable that sets which event you are currently editing, such as "onCollide", "onInit", and "onUpdate"
 var _currentlyChanging = null;
 
-function instantiateObject() {
-	if (_selectedObject == null)
+function instantiateObject(argument) {
+	if (argument == null)
 	{
-		alert("ERROR: instantiateObject run w/o a selected object");
+		alert("ERROR: instantiateObject run w/o a selected blueprint");
 		return false;
 	}
 	else
 	{
 		///TODO: add instantiation code
+		//load from json file
+
 	}
 }
 
 function destroySelf ()
 {
-	if (selfObject == null)
+	if (this == null)
 	{
 		alert("ERROR: destroy self run w/o a self object");
 		return false;
 	}
 	else
 	{
-		selfObject.doRemove = true;
+		this.doRemove = true;
 	}
 }
 
@@ -334,6 +336,7 @@ function redrawTextArea()
 	};
 }
 
+/// saves the callback functions to the callbacks
 function save () {
 	createArray();
 
@@ -341,14 +344,14 @@ function save () {
 	{
 		if (_currentlyChanging == "onCollide")
 		{
-			selfObject.onCollide = $("#text").val();
+			this.setOnCollide($("#text").val());
 		}
 		else if(_currentlyChanging == "onInit")
 		{
-			selfObject.onInit = $("#text").val();
+			this.setOnInit($("#text").val());
 		}
 		else if(_currentlyChanging == "onUpdate"){
-			selfObject.onUpdate = $("#text").val();
+			this.setOnUpdate($("#text").val());
 		}
 		else{
 			alert("error: not sure what callback we are creating");
@@ -360,19 +363,20 @@ function save () {
 	}
 }
 
+///Loads the callback functions that they are currently 
 function load () {
 	if(_currentlyChanging != null)
 	{
 		if (_currentlyChanging == "onCollide")
 		{
-			$("#text").val(selfObject.onCollide);
+			$("#text").val(this.getOnCollide());
 		}
 		else if(_currentlyChanging == "onInit")
 		{
-			$("#text").val(selfObject.onInit);
+			$("#text").val(this.getOnInit());
 		}
 		else if(_currentlyChanging == "onUpdate"){
-			$("#text").val(selfObject.onUpdate);
+			$("#text").val(this.getOnUpdate());
 		}
 		else{
 			alert("error: not sure what callback we are creating");
