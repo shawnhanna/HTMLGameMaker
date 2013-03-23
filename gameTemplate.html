@@ -4,8 +4,6 @@
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript">
 
-	var PI = 3.14159;
-
 	function myFunction()
 	{
 		$('#test').unbind('click');
@@ -23,7 +21,7 @@
 		else
 		{
 			///todo: fix to match engine
-			_selectedBlueprint.velocityX = speed;
+			_selectedBlueprint.velocity.X = speed;
 		}
 	}
 
@@ -37,7 +35,7 @@
 		else
 		{
 			///todo: fix to match engine
-			_selectedBlueprint.velocityY = speed;
+			_selectedBlueprint.velocity.Y = speed;
 		}
 	}
 
@@ -62,6 +60,20 @@
 		}
 	}
 
+	function reverseVelX ()
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			_selectedBlueprint.velocity.X = -1 * _selectedBlueprint.velocity.X;
+
+		}
+	}
+
 	function setOnCollide()
 	{
 		if (_selectedBlueprint == null)
@@ -75,7 +87,6 @@
 			$("#test").on("onCollide", function()
 			{
 				eval($("#text").val());
-				alert(	)
 			});
 		}
 	}
@@ -83,24 +94,58 @@
 	function addVelX () {
 		//velocity = $("#addVelX").val();
 		velocity = prompt("Enter a velocity", "0");
-		$("#text").append("setVelocityX("+velocity+");\n");
+		$("#text").val( $("#text").val() + "setVelocityX("+velocity+");\n");
 	}
+	function addVelY () {
+		//velocity = $("#addVelX").val();
+		velocity = prompt("Enter a velocity", "0");
+		$("#text").val( $("#text").val() + "setVelocityY("+velocity+");\n");
+	}
+
+	function reverseX() {
+		$("#text").val( $("#text").val() + "reverseX();\n");
+	}
+	function reverseY() {
+		$("#text").val( $("#text").val() + "reverseY();\n");
+	}
+
+	function instantiateObject() {
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: setOnCollide run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			///TODO: add instantiation code
+		}
+	}
+
+	function createBlueprint () {
+		//todo: add code for creation of new blueprint
+	}
+
 
 	</script>
 </head>
 <body>
 
-<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
-</canvas>
-
 <div id="editingArea">
-
-<textarea id="text" rows="10" cols="20">Type function here, or click one of the buttons to the right
-
+<textarea id="text" rows="10" cols="20">
 </textarea>
+
+<br>
 <button id="addVelX" onclick="addVelX();">Set velocity (x)</button>
 <button id="addVelY" onclick="addVelY()">Set velocity (y)</button>
 <button id="addVelA" onclick="addVelAngle()">Set velocity (speed & angle in radians)</button>
+<br>
+<button id="reverseXButton" onclick="reverseX();">Reverse velocity (x)</button>
+<button id="reverseYButton" onclick="reverseY()">Reverse velocity (y)</button>
+<br>
+<button id="instantiateObject" onclick="instantiateObject();">Create project</button>
+<button id="destroyObject" onclick="destroyObject()">Destroy project</button>
+
+<br>
 <button onclick="myFunction()">Click me</button>
 </div>
 </body>
