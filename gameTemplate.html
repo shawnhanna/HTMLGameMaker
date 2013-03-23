@@ -10,13 +10,14 @@
 		createArray();
 	}
 
+
 	function createBlueprint () {
 		//todo: add code for creation of new blueprint
 	}
 
 	</script>
 </head>
-<body>
+<body onload="hideInstantiated()">
 
 <div id="editingArea">
 <textarea id="text" rows="10" cols="50">
@@ -30,17 +31,26 @@
 <button id="reverseXButton" onclick="reverseX();">Reverse velocity (x)</button>
 <button id="reverseYButton" onclick="reverseY();">Reverse velocity (y)</button>
 <br>
-<button id="instantiateObject" onclick="addInstantiateObject();">Create object</button>
+<button id="addInstantiateObject" onclick="addInstantiateObject();">Create object</button>
+<!-- Only after instantiated button has been pressed -->
 <button id="addInstantiateObjectVelY" onclick="addInstantiateObjectVelY();">Set created object vel y</button>
 <button id="addInstantiateObjectVelX" onclick="addInstantiateObjectVelX();">Set created object vel x</button>
 <button id="addInstantiateObjectPosY" onclick="addInstantiateObjectPosY();">Set created object pos y</button>
 <button id="addInstantiateObjectPosX" onclick="addInstantiateObjectPosX();">Set created object pos x</button>
-<button id="destroySelf" onclick="addDestroySelf();">Destroy self</button>
-<button id="destroyCollider" onclick="addDestroyCollider();">Destroy collider</button>
+<button id="doneInstantiatedButton" onclick="hideInstantiated();" >Done with instantiation</button>
 <br>
+<button id="destroySelf" onclick="addDestroySelf();">Destroy self</button>
+<br>
+<!-- Only if in Collider Set of buttons -->
 <button id="ifColliderTag" onclick="addIfColliderTag();">if (collider tag == ''){} </button>
+<button id="destroyCollider" onclick="addDestroyCollider();">Destroy collider</button>
 
-<button onclick="myFunction()">Click me</button>
+<br>
+<!-- Only if in update set of buttons -->
+<button id="ifColliderTag" onclick="addInputKeyDown();">if (key pressed == ''){} </button>
+
+<br>
+<button onclick="endIf()">End If</button>
 </div>
 </body>
 </html>

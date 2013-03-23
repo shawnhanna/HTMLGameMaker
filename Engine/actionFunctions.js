@@ -188,24 +188,29 @@ function addInstantiateObject() {
 	{
 		$("#text").val ( $("#text").val() + "var x = instantiateObject(\""+blueprint+"\");");
 		createArray();
+		showInstantiated();
 	}
 }
 
 function addInstantiateObjectVelX () {
 	var vel = prompt("velocity x", "0");
-	$("#text").val ( $("#text").val() + "x.velocity.X = "+vel+";");
+	$("#text").val ( $("#text").val() + "x.velocity.X = "+vel+";\n");
+	return true;
 }
 function addInstantiateObjectVelY () {
 	var vel = prompt("velocity y", "0");
-	$("#text").val ( $("#text").val() + "x.velocity.Y = "+vel+";");
+	$("#text").val ( $("#text").val() + "x.velocity.Y = "+vel+";\n");
+	return true;
 }
 function addInstantiateObjectPosY () {
 	var pos = prompt("position y", "0");
-	$("#text").val ( $("#text").val() + "x.position.Y = "+pos+";");
+	$("#text").val ( $("#text").val() + "x.position.Y = "+pos+";\n");
+	return true;
 }
-function addInstantiateObjectPosY () {
-	var pos = prompt("position y", "0");
-	$("#text").val ( $("#text").val() + "x.position.X = "+pos+";");
+function addInstantiateObjectPosX () {
+	var pos = prompt("position x", "0");
+	$("#text").val ( $("#text").val() + "x.position.X = "+pos+";\n");
+	return true;
 }
 
 function createArray () {
@@ -219,7 +224,17 @@ function createArray () {
 }
 
 function getFunctionFromCommands() {
-	return function() {eval($("#text").val ());};
+	return function() { $("#text").val(); };
+}
+
+function addInputKeyDown () {
+	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	var num = keyNum.charCodeAt(0);
+	//alert("that is ascii value: "+num);
+	str = "var isPressed = Input.getKey("+num+")\n";
+	str = str+"if (isPressed){\n";
+
+	$("#text").val ( $("#text").val() + str);
 }
 
 function addIfColliderTag () {
@@ -228,14 +243,6 @@ function addIfColliderTag () {
 	{
 		$("#text").val ( $("#text").val() + "if (collider.tag == \"" + arg + "\"){");
 		createArray();
-		prevVal = $("#ifColliderTag").text();
-		$("#ifColliderTag").text("End If");
-		$("#ifColliderTag").unbind("click");
-		document.getElementById('ifColliderTag').onclick=function(){
-			endIfColliderTag();
-			return false;
-		};
-		return false;
 	}
 	else
 	{
@@ -244,16 +251,24 @@ function addIfColliderTag () {
 	}
 }
 
-function endIfColliderTag () {
+function showInstantiated() {
+	$("#addInstantiateObjectVelY").show();
+	$("#addInstantiateObjectVelX").show();
+	$("#addInstantiateObjectPosX").show();
+	$("#addInstantiateObjectPosY").show();
+	$("#doneInstantiatedButton").show();
+}
+function hideInstantiated() {
+	$("#addInstantiateObjectVelY").hide();
+	$("#addInstantiateObjectVelX").hide();
+	$("#addInstantiateObjectPosX").hide();
+	$("#addInstantiateObjectPosY").hide();
+	$("#doneInstantiatedButton").hide();
+}
+
+function endIf () {
 	$("#text").val ( $("#text").val() + "}");
 	createArray();
-	$("#ifColliderTag").unbind("click");
-	document.getElementById('ifColliderTag').onclick=function(){
-		addIfColliderTag();
-		return false;
-	};
-	$("#ifColliderTag").text(prevVal);
-	return false;
 }
 
 function redrawTextArea()
