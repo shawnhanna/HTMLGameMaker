@@ -477,20 +477,24 @@ function load () {
 		else if (_selectedBlueprint)
 		{
 			console.log("bp = "+_selectedBlueprint);
-			$.get("blueprints/"+_selectedBlueprint+".json", function(data) {
-				o = data;
-				if (_currentlyChanging == "collide")
-				{
-					$("#text").val(o["functs"]["OnCollide"]);
-				}
-				else if(_currentlyChanging == "init")
-				{
-					$("#text").val(o["functs"]["OnInit"]);
-				}
-				else if(_currentlyChanging == "update"){
-					$("#text").val(o["functs"]["OnUpdate"]);
-				}
-				createArray();
+			$.ajax({
+				url:    'blueprints/'+_selectedBlueprint+".json",
+				success: function(result) {
+					o = result;
+					if (_currentlyChanging == "collide")
+					{
+						$("#text").val(o["functs"]["OnCollide"]);
+					}
+					else if(_currentlyChanging == "init")
+					{
+						$("#text").val(o["functs"]["OnInit"]);
+					}
+					else if(_currentlyChanging == "update"){
+						$("#text").val(o["functs"]["OnUpdate"]);
+					}
+					createArray();
+				},
+				async:   false
 			});
 			return true;
 		}
@@ -625,16 +629,16 @@ function redrawBlueprints (bps) {
 		for (var i = bps.length - 1; i >= 0; i--) {
 			bps[i] = bps[i].substr(0, bps[i].length-5);
 			str += '<li><a href="#" onclick=\'blueprintSelected("';
-			str+=bps[i];
-			str += '")\'>'+bps[i]+"</a></li>";
-		};
-		str += "</ul>";
-	}
-	else
-	{
-		alert("NO blueprints found");
-	}
-	document.getElementById('right').innerHTML = str;
+				str+=bps[i];
+				str += '")\'>'+bps[i]+"</a></li>";
+};
+str += "</ul>";
+}
+else
+{
+	alert("NO blueprints found");
+}
+document.getElementById('right').innerHTML = str;
 }
 
 function getSceneGraph (argument) {
@@ -646,19 +650,19 @@ function getSceneGraph (argument) {
 		for (var i = SceneGraph.length - 1; i >= 0; i--) {
 			var tempName = SceneGraph[i].blueprint.substr(0, SceneGraph[i].blueprint.length-5);
 			str += '<tr><td><a href="#" onclick=\'objectSelectedIndex("';
-			str += i;
-			str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
-			str += '<td><a href="#" onclick=\'deleteObjectIndex("';
-			str += i;
-			str += '")\'>remove</a></td></tr>';
-		};
-		str += "</table>";
-		document.getElementById('left').innerHTML = str;
-	}
-	else
-	{
-		alert("NO objects found");
-	}
+				str += i;
+				str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
+str += '<td><a href="#" onclick=\'deleteObjectIndex("';
+	str += i;
+	str += '")\'>remove</a></td></tr>';
+};
+str += "</table>";
+document.getElementById('left').innerHTML = str;
+}
+else
+{
+	alert("NO objects found");
+}
 }
 
 function getBP () {

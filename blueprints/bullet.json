@@ -1,1 +1,1 @@
-{"tag":"","transform":{"Position":{"x":0,"y":0},"Velocity":{"x":"1","y":"1"}},"texture":{"src":"img.png"},"functs":{"OnCollide":"","OnInit":"","OnUpdate":""}}
+{"tag":"","transform":{"Position":{"x":0,"y":0},"Velocity":{"x":"1","y":"1"}},"texture":{"src":"bullet.png"},"functs":{"OnCollide":"","OnInit":"","OnUpdate":""}}
