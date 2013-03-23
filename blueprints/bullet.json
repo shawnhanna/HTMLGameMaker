@@ -1,26 +1,13 @@
 {
-	"tag": "bullet",
-	"transform":
-	{
-		"Position" :
-		{
-			"x":"0",
-			"y":"0"
-		},
-		"Velocity":
-		{
-			"x":"0",
-			"y":"0"
-		}
-	},
-	"texture":
-	{
-		"src": "bullet.png"
-	},
-	"functs":
-	{
-		"OnInit":"this.transform.Velocity.y = -30;",
-		"OnUpdate":"if (this.transform.Position.y < 0) { this.doRemove = true;}",
-		"OnCollide":""
-	}
+"tag":"bullet",
+"transform":
+{"Position":
+{"x":0,"y":0},
+"Velocity":
+{"x":"0","y":"-10"}},
+"texture":{"src":"bullet.png"},
+"functs":{"OnCollide":"",
+"OnInit":"this.transform.Velocity.y = -10;",
+"OnUpdate": "if (this.transform.Position.y < 0) { this.doRemove = true;}"
+}
 }
