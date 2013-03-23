@@ -1,0 +1,1 @@
+{"tag":"enemy","transform":{"Position":{"x":0,"y":0},"Velocity":{"x":0,"y":0}},"texture":{"src":"img.png"},"functs":{"OnCollide":"if (collider.tag == \"bullet\"){\nthis.doRemove = true;\n}\n","OnInit":"","OnUpdate":""}}
