@@ -73,8 +73,8 @@ function blueprintSelected (argument) {
 	str += '<td><button id="changeTagBut" class="btn btn-inverse what "onclick="changeTag();">Change Tag</button></td>';
 	str += '<td><button id="initVelBut" class="btn btn-inverse what "onclick="changeInitVelocity();">initial velocity</button></td>';
 	str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
-	str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
-	str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
+	str += '</tr><tr><td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
+	str += '<td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
 	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
 	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
@@ -379,7 +379,6 @@ function redrawTextArea()
 
 /// saves the callback functions to the callbacks
 function save () {
-	alert("Saving");
 	createArray();
 
 	if (_selectedBlueprint)
@@ -532,6 +531,7 @@ function createBlueprint (argument) {
 			}
 		}
 		save();
+		getBP();
 	}
 	else
 	{
@@ -562,7 +562,7 @@ function saveJSON (argument) {
 	str = JSON.stringify(o);
 	//alert(str);
 	//save to file
-	$.post("/", { filename: "/blueprints/"+_selectedBlueprint+".json", data: str});
+	$.post("/", { filename: "/"+_selectedBlueprint+".json", data: str});
 }
 
 function redrawBlueprints (bps) {
