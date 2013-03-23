@@ -6,16 +6,17 @@
 
 	function myFunction()
 	{
-		$('#test').unbind('click');
-		$("#test").click(function(){eval($("#text").val());});
 	}
 
+	var _selectedObject = null;
 	var _selectedBlueprint = null;
+	var commandList = new Array();
+
 	function setVelocityX(speed)
 	{
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			alert("ERROR: setVelocityX run w/o a selected object");
 			return false;
 		}
 		else
@@ -27,9 +28,9 @@
 
 	function setVelocityY(speed)
 	{
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: setVelocityY run w/o a selected blueprint");
+			alert("ERROR: setVelocityY run w/o a selected object");
 			return false;
 		}
 		else
@@ -41,9 +42,9 @@
 
 	function setVelocity(speed, radians)
 	{
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			alert("ERROR: setVelocityX run w/o a selected object");
 			return false;
 		}
 		else
@@ -62,14 +63,28 @@
 
 	function reverseVelX ()
 	{
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: setVelocityX run w/o a selected blueprint");
+			alert("ERROR: reverseX run w/o a selected object");
 			return false;
 		}
 		else
 		{
-			_selectedBlueprint.velocity.X = -1 * _selectedBlueprint.velocity.X;
+			_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
+
+		}
+	}
+
+	function reverseVelY ()
+	{
+		if (_selectedObject == null)
+		{
+			alert("ERROR: reverseY run w/o a selected object");
+			return false;
+		}
+		else
+		{
+			_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
 
 		}
 	}
@@ -94,25 +109,29 @@
 	function addVelX () {
 		//velocity = $("#addVelX").val();
 		velocity = prompt("Enter a velocity", "0");
-		$("#text").val( $("#text").val() + "setVelocityX("+velocity+");\n");
+		commandList.push("setVelocityX("+velocity+");");
+		redrawTextArea();
 	}
 	function addVelY () {
 		//velocity = $("#addVelX").val();
 		velocity = prompt("Enter a velocity", "0");
-		$("#text").val( $("#text").val() + "setVelocityY("+velocity+");\n");
+		commandList.push("setVelocityY("+velocity+");");
+		redrawTextArea();
 	}
 
 	function reverseX() {
-		$("#text").val( $("#text").val() + "reverseX();\n");
+		commandList.push("reverseVelX();");
+		redrawTextArea();
 	}
 	function reverseY() {
-		$("#text").val( $("#text").val() + "reverseY();\n");
+		commandList.push("reverseVelY();");
+		redrawTextArea();
 	}
 
 	function instantiateObject() {
 		if (_selectedBlueprint == null)
 		{
-			alert("ERROR: setOnCollide run w/o a selected blueprint");
+			alert("ERROR: instantiateObject run w/o a selected blueprint");
 			return false;
 		}
 		else
@@ -121,10 +140,29 @@
 		}
 	}
 
+	function destroyObject ()
+	{
+		if (_selectedBlueprint == null)
+		{
+			alert("ERROR: destroyObject run w/o a selected blueprint");
+			return false;
+		}
+		else
+		{
+			//TODO: add destruction code
+		}
+	}
+
 	function createBlueprint () {
 		//todo: add code for creation of new blueprint
 	}
 
+	function redrawTextArea()
+	{
+		for (var i = 0; i<commandList.length; i++) {
+			$("#text").val( $("#text").val() + commandList[i] + "\n");
+		};
+	}
 
 	</script>
 </head>
@@ -136,15 +174,14 @@
 
 <br>
 <button id="addVelX" onclick="addVelX();">Set velocity (x)</button>
-<button id="addVelY" onclick="addVelY()">Set velocity (y)</button>
-<button id="addVelA" onclick="addVelAngle()">Set velocity (speed & angle in radians)</button>
+<button id="addVelY" onclick="addVelY();">Set velocity (y)</button>
+<button id="addVelA" onclick="addVelAngle();">Set velocity (speed & angle in radians)</button>
 <br>
 <button id="reverseXButton" onclick="reverseX();">Reverse velocity (x)</button>
-<button id="reverseYButton" onclick="reverseY()">Reverse velocity (y)</button>
+<button id="reverseYButton" onclick="reverseY();">Reverse velocity (y)</button>
 <br>
-<button id="instantiateObject" onclick="instantiateObject();">Create project</button>
-<button id="destroyObject" onclick="destroyObject()">Destroy project</button>
-
+<button id="instantiateObject" onclick="instantiateObject();">Create object</button>
+<button id="destroyObject" onclick="destroyObject();">Destroy object</button>
 <br>
 <button onclick="myFunction()">Click me</button>
 </div>
