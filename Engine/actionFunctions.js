@@ -155,33 +155,44 @@ function hideUpdateButtons (argument) {
 
 function addPosRelativeX () {
 	newPos = prompt("Enter a new position x (relative to the current position)", "0");
+	if (newPos == null)
+		return false;
+
 	$("#text").val ( $("#text").val() + "this.transform.Position.x += "+newPos+";");
 	createArray();
 }
 function addPosRelativeY () {
 	newPos = prompt("Enter a new position y (relative to the current position)", "0");
+	if (newPos == null)
+		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Position.y += "+newPos+";");
 	createArray();
 }
 
 function addVelY () {
-	//velocity = $("#addVelX").val();
 	velocity = prompt("Enter a velocity", "0");
+	if (velocity == null)
+		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.y = "+velocity+";");
 	createArray();
 }
 
 
 function addVelX () {
-	//velocity = $("#addVelX").val();
 	velocity = prompt("Enter a velocity", "0");
+	if (velocity == null)
+		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.x = "+velocity+";");
 	createArray();
 }
 
 function addVelAngle () { 	
 	velocity = prompt("Enter a velocity", "0");
+	if (velocity == null)
+		return false;
 	angle = prompt("Enter an angle (radians)", "0");
+	if (angle == null)
+		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.x = Math.cos("+radians+")*"+velocity+";");
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.y = Math.sin("+radians+")*"+velocity+";");
 	createArray();
@@ -208,6 +219,10 @@ function addDestroyCollider() {
 
 function addInstantiateObject() {
 	var blueprint = prompt("which blueprint are you creating this from","");
+	if (blueprint == null)
+	{
+		return false;
+	}
 	if (blueprint != "")
 	{
 		$("#text").val ( $("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
@@ -218,21 +233,37 @@ function addInstantiateObject() {
 
 function addInstantiateObjectVelX () {
 	var vel = prompt("velocity x", "0");
+	if (vel == null)
+	{
+		return false;
+	}
 	$("#text").val ( $("#text").val() + "x.transform.Velocity.X = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectVelY () {
 	var vel = prompt("velocity y", "0");
+	if (vel == null)
+	{
+		return false;
+	}
 	$("#text").val ( $("#text").val() + "x.transform.Velocity.Y = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectPosY () {
 	var pos = prompt("position y", "0");
+	if (pos == null)
+	{
+		return false;
+	}
 	$("#text").val ( $("#text").val() + "x.transform.Position.Y = "+pos+";\n");
 	return true;
 }
 function addInstantiateObjectPosX () {
 	var pos = prompt("position x", "0");
+	if (pos == null)
+	{
+		return false;
+	}
 	$("#text").val ( $("#text").val() + "x.transform.Position.X = "+pos+";\n");
 	return true;
 }
@@ -253,6 +284,8 @@ function getFunctionFromCommands() {
 
 function addInputKeyPressed () {
 	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	if (keyNum == null)
+		return false;
 	var num = keyNum.charCodeAt(0);
 	//alert("that is ascii value: "+num);
 	str = "var isPressed = Input.getKey("+num+")\n";
@@ -263,6 +296,8 @@ function addInputKeyPressed () {
 
 function addInputKeyDown () {
 	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	if (keyNum == null)
+		return false;
 	var num = keyNum.charCodeAt(0);
 	//alert("that is ascii value: "+num);
 	str = "var isPressed = Input.getKeyDown("+num+")\n";
@@ -273,6 +308,8 @@ function addInputKeyDown () {
 
 function addInputKeyUp () {
 	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	if (keyNum == null)
+		return false;
 	var num = keyNum.charCodeAt(0);
 	//alert("that is ascii value: "+num);
 	str = "var isPressed = Input.getKeyUp("+num+")\n";
@@ -283,6 +320,8 @@ function addInputKeyUp () {
 
 function addIfColliderTag () {
 	var arg = prompt ("what tag are you checking is colliding", "");
+	if (arg == null)
+		return false;
 	if (arg != "")
 	{
 		$("#text").val ( $("#text").val() + "if (collider.tag == \"" + arg + "\"){");
