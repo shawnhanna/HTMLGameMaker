@@ -111,10 +111,10 @@ body{
 #canvas
 {
 	position:absolute;
-	//width:800px;
-	//height:600px;
-	width:40%;
-	height:53%;
+	width:540px;
+	height:400px;
+	//width:40%;
+	//height:53%;
 	left:350px;
 	right:350px;
 	margin:0 auto;
