@@ -84,9 +84,23 @@ function blueprintSelected (argument) {
 	str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
 	str += '</tr><tr><td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
 	str += '<td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
-	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
+	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td>';
+	str += '<td><button id="changeImageButton" type="file" class="btn btn-inverse what" onclick=\'changeImage();\'>Change default Image</button></td></tr>';
+	str += '</tbody></table>';
 	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
+}
+
+function changeImage () {
+	var ret = prompt("Please enter an image filename","");
+	if (_selectedBlueprint)
+	{
+		o["texture"]["src"] = ret;
+	}
+	else if (_selectedObject)
+	{
+		_selectedObject.texture.img = ret;
+	}
 }
 
 function showUpdateButtons (argument) {
@@ -270,7 +284,7 @@ function addInstantiateObject() {
 	}
 	if (blueprint != "")
 	{
-		$("#text").val ( $("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
+		$("#text").val ($("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
 		createArray();
 		showInstantiated();
 	}
@@ -654,5 +668,5 @@ function getBP () {
 }
 
 function displayValues () {
-	
+
 }
