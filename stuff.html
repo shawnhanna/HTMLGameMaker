@@ -4,169 +4,26 @@
 	<link href="style.css" rel="stylesheet" type="text/css" /> 
 	<title>gameshit</title
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-	
+	<script src="actionFunctions.js"></script>
 	<script type="text/javascript">
-
-	function myFunction()
-	{
-	}
-
-	var _selectedObject = null;
-	var _selectedBlueprint = null;
-	var commandList = new Array();
-
-	function setVelocityX(speed)
-	{
-		if (_selectedObject == null)
-		{
-			alert("ERROR: setVelocityX run w/o a selected object");
-			return false;
-		}
-		else
-		{
-			///todo: fix to match engine
-			_selectedBlueprint.velocity.X = speed;
-		}
-	}
-
-	function setVelocityY(speed)
-	{
-		if (_selectedObject == null)
-		{
-			alert("ERROR: setVelocityY run w/o a selected object");
-			return false;
-		}
-		else
-		{
-			///todo: fix to match engine
-			_selectedBlueprint.velocity.Y = speed;
-		}
-	}
-
-	function setVelocity(speed, radians)
-	{
-		if (_selectedObject == null)
-		{
-			alert("ERROR: setVelocityX run w/o a selected object");
-			return false;
-		}
-		else
-		{
-			if (setVelocityX(speed*Math.cos(radians)))
+		function updateButtons (state) {
+			if (state == "create_blueprint")
 			{
-				if (setVelocityY(speed*Math.sin(radians)))
-				{
-					return true;
-				}
+
+				<table class="table-nonfluid">
+				<tbody>
+					<tr>
+					<td><button id="changeName" class="btn btn-inverse what" onclick="addVelX();">Set velocity X</button></td>
+					<td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity Y</button></td>
+					<td><button id="addVelA" class="btn btn-inverse what"onclick="addVelAngle();">Set velocity (speed & angle in radians)</button>
+					<td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos X</button></td>
+					<td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos Y</button></td>
+					</tr>
+					<tr>
+
+					</tr>
 			}
-			alert("ERROR setting velocity with speed = "+speed + " and radians = " + radians);
-			return false;
 		}
-	}
-
-	function reverseVelX ()
-	{
-		if (_selectedObject == null)
-		{
-			alert("ERROR: reverseX run w/o a selected object");
-			return false;
-		}
-		else
-		{
-			_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
-
-		}
-	}
-
-	function reverseVelY ()
-	{
-		if (_selectedObject == null)
-		{
-			alert("ERROR: reverseY run w/o a selected object");
-			return false;
-		}
-		else
-		{
-			_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
-
-		}
-	}
-
-	function setOnCollide()
-	{
-		if (_selectedBlueprint == null)
-		{
-			alert("ERROR: setOnCollide run w/o a selected blueprint");
-			return false;
-		}
-		else
-		{
-			$('#test').off('onCollide');
-			$("#test").on("onCollide", function()
-			{
-				eval($("#text").val());
-			});
-		}
-	}
-
-	function addVelX () {
-		//velocity = $("#addVelX").val();
-		velocity = prompt("Enter a velocity", "0");
-		commandList.push("setVelocityX("+velocity+");");
-		redrawTextArea();
-	}
-	function addVelY () {
-		//velocity = $("#addVelX").val();
-		velocity = prompt("Enter a velocity", "0");
-		commandList.push("setVelocityY("+velocity+");");
-		redrawTextArea();
-	}
-
-	function reverseX() {
-		commandList.push("reverseVelX();");
-		redrawTextArea();
-	}
-	function reverseY() {
-		commandList.push("reverseVelY();");
-		redrawTextArea();
-	}
-
-	function instantiateObject() {
-		if (_selectedBlueprint == null)
-		{
-			alert("ERROR: instantiateObject run w/o a selected blueprint");
-			return false;
-		}
-		else
-		{
-			///TODO: add instantiation code
-		}
-	}
-
-	function destroyObject ()
-	{
-		if (_selectedBlueprint == null)
-		{
-			alert("ERROR: destroyObject run w/o a selected blueprint");
-			return false;
-		}
-		else
-		{
-			//TODO: add destruction code
-		}
-	}
-
-	function createBlueprint () {
-		//todo: add code for creation of new blueprint
-	}
-
-	function redrawTextArea()
-	{
-		for (var i = 0; i<commandList.length; i++) {
-			$("#text").val( $("#text").val() + commandList[i] + "\n");
-		};
-	}
-
 	</script>
 </head>
 <body>
@@ -206,15 +63,16 @@
 				<div class="hero-unit">
 					<div id="textEdit">
 						<textarea id="text" rows="10" cols="10"></textarea>
-					</div>	
-					<table class=" table-nonfluid">
+					</div>
+					<div id="buttonsDiv">
+						<table class="table-nonfluid">
 						<tbody>
 							<tr>
-							<td><button id="addVelX" class="btn btn-inverse what" onclick="addVelX();">Set velocity (x)</button></td>
-							<td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity (y)</button></td>
+							<td><button id="addVelX" class="btn btn-inverse what" onclick="addVelX();">Set velocity X</button></td>
+							<td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity Y</button></td>
 							<td><button id="addVelA" class="btn btn-inverse what"onclick="addVelAngle();">Set velocity (speed & angle in radians)</button>
-							<td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos (x)</button></td>
-							<td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos (y)</button></td>
+							<td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos X</button></td>
+							<td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos Y</button></td>
 							</tr>
 							<tr>
 							<td><button id="reverseXButton" class="btn btn-inverse what"onclick="reverseX();">Reverse velocity (x)</button></td>
@@ -258,6 +116,7 @@
 							</tr>
 						</tbody>
 					</table>
+					</div>
 				<div>	
 			</div>
 		</div>
