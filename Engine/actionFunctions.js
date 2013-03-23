@@ -45,6 +45,16 @@ function changeEditingState (state) {
 	}
 }
 
+///argument is the object that is selected
+function objectSelected (argument) {
+	_selectedBlueprint = null;
+	_selectedObject = argument;
+}
+
+function blueprintSelected (argument) {
+	_selectedObject = null;
+	_selectedBlueprint = argument;
+}
 
 function showUpdateButtons (argument) {
 	$("#ifKeyPressed").show();
@@ -62,117 +72,13 @@ function hideCollideButtons (argument) {
 	$("#ifColliderTag").hide();
 	$("#destroyCollider").hide();
 }
+
 function hideInitButtons (argument) {
 }
 function hideUpdateButtons (argument) {
 	$("#ifKeyPressed").hide();
 	$("#ifKeyUp").hide();
 	$("#ifKeyDown").hide();
-}
-
-function setVelocityX(speed)
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: setVelocityX run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		///todo: fix to match engine
-		_selectedObject.velocity.X = speed;
-	}
-}
-
-function setVelocityY(speed)
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: setVelocityY run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		///todo: fix to match engine
-		_selectedObject.velocity.Y = speed;
-	}
-}
-
-function setVelocity(speed, radians)
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: setVelocityX run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		if (setVelocityX(speed*Math.cos(radians)))
-		{
-			if (setVelocityY(speed*Math.sin(radians)))
-			{
-				return true;
-			}
-		}
-		alert("ERROR setting velocity with speed = "+speed + " and radians = " + radians);
-		return false;
-	}
-}
-
-
-function setRelativePositionX(position)
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: setRelativePositionX run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		///todo: fix to match engine
-		_selectedObject.position.X = _selectedObject.position.X + position;
-	}
-}
-
-function setRelativePositionY(position)
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: setRelativePositionY run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		///todo: fix to match engine
-		_selectedObject.position.Y = _selectedObject.position.Y + position;
-	}
-}
-
-
-function reverseVelX ()
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: reverseX run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
-	}
-}
-
-function reverseVelY ()
-{
-	if (_selectedObject == null)
-	{
-		alert("ERROR: reverseY run w/o a selected object");
-		return false;
-	}
-	else
-	{
-		_selectedObject.velocity.X = -1 * _selectedObject.velocity.X;
-	}
 }
 
 function addPosRelativeX () {
@@ -324,6 +230,7 @@ function showInstantiated() {
 	$("#addInstantiateObjectPosY").show();
 	$("#doneInstantiatedButton").show();
 }
+
 function hideInstantiated() {
 	$("#addInstantiateObjectVelY").hide();
 	$("#addInstantiateObjectVelX").hide();
@@ -349,51 +256,28 @@ function redrawTextArea()
 function save () {
 	createArray();
 
+	if (_selectedBlueprint)
+	{
+		saveJSON();
+		return true;
+	}
+
 	if(_currentlyChanging != null)
 	{
 		if (_currentlyChanging == "collide")
 		{
-			if (_selectedBlueprint)
-			{
-				o["funct"]["OnCollide"] = $("#text").val();
-			}
-			else
-			{
-				this.setOnCollide($("#text").val());
-			}
+			_selectedObject.setOnCollide($("#text").val());
 		}
 		else if(_currentlyChanging == "init")
 		{
-			if (_selectedBlueprint)
-			{
-				o["funct"]["OnInit"] = $("#text").val();
-			}
-			else
-			{
-				this.setOnInit($("#text").val());
-			}
+			_selectedObject.setOnInit($("#text").val());
 		}
 		else if(_currentlyChanging == "update"){
-			if (_selectedBlueprint)
-			{
-				o["funct"]["OnUpdate"] = $("#text").val();
-			}
-			else
-			{
-				this.setOnUpdate($("#text").val());
-			}
-		}
-		else{
-			alert("error: not sure what callback we are creating");
-		}
-		if (_selectedBlueprint)
-		{
-			saveJSON();
+			_selectedObject.setOnUpdate($("#text").val());
 		}
 	}
-	else
-	{
-		alert("Error: no callback function overwriting specified");
+	else{
+		alert("error: not sure what callback we are creating");
 	}
 }
 
@@ -467,7 +351,7 @@ function createBlueprint (argument) {
 		_selectedBlueprint = name;
 
 		o = {
-			"tag":"none",
+			"tag":"",
 			"transform":
 			{
 				"Position":
@@ -492,14 +376,31 @@ function createBlueprint (argument) {
 				"OnUpdate":""
 			}
 		}
+
+		str =  '<table class="table-nonfluid"><tbody><tr><td>';
+		str += '<button id="changeNameBut" class="btn btn-inverse what "onclick="changeName();">Change Name</button></td>';
+		str += '<td><button id="changeTagBut" class="btn btn-inverse what "onclick="changeTag();">Change Tag</button></td>';
+		str += '<td><button id="initVelBut" class="btn btn-inverse what "onclick="changeInitVelocity();">initial velocity</button></td>';
+		str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
+		str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
+		str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
+		str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
+		document.getElementById('buttonsDiv').innerHTML = str;
+		changeEditingState("create_blueprint");
+
 		saveJSON();
 	}
 }
 
 ///save blueprint in json format
 function saveJSON (argument) {
+	if (!_selectedBlueprint)
+	{
+		alert("No blueprint selected: "+_selectedBlueprint);
+		return false;
+	}
 	str = JSON.stringify(o);
-	alert(str);
+	//alert(str);
 	//save to file
 	var form = document.getElementById("postForm");
 	console.log(form);

@@ -14,7 +14,6 @@ function init()
 	loadScene("scene.json");
 	
 	IntervalID = setInterval(gameLoop, 1000 / 30);
-	
 }
 
 function gameLoop()

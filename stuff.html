@@ -2,23 +2,24 @@
 <head>
 	<link href="bootstrap.css" rel="stylesheet" type="text/css">
 	<link href="style.css" rel="stylesheet" type="text/css" /> 
-	<title>gameshit</title>
+	<title>game!!!</title>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="Engine/Input.js"></script>
+	<script type="text/javascript" src="Engine/Rect.js"></script>
+	<script type="text/javascript" src="Engine/vector2.js"></script>
+	<script type="text/javascript" src="Engine/Transform.js"></script>
+	<script type="text/javascript" src="Engine/Texture2D.js"></script>
+	<script type="text/javascript" src="Engine/GameObject.js"></script>
+	<script type="text/javascript" src="Engine/GameObjectFactory.js"></script>
+	<script type="text/javascript" src="Engine/LoadScene.js"></script>
+	<script type="text/javascript" src="Engine/init.js" ></script>
+	
 	<script src="Engine/actionFunctions.js"></script>
 	<script type="text/javascript">
 		function updateButtons (state) {
 			if (state == "create_blueprint")
 			{
-				str = '<table class="table-nonfluid"><tbody><tr><td>';
-				str += '<button id="changeNameBut" class="btn btn-inverse what "onclick="changeName();">Change Name</button></td>';
-				str += '<td><button id="changeTagBut" class="btn btn-inverse what "onclick="changeTag();">Change Tag</button></td>';
-				str += '<td><button id="initVelBut" class="btn btn-inverse what "onclick="changeInitVelocity();">initial velocity</button></td>';
-				str +='<td><button id="initVelBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial velocity</button></td>';
-				str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
-				str +='<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
-				str +='<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
-				document.getElementById('buttonsDiv').innerHTML = str;
-				changeEditingState("create_blueprint");
+				createBlueprint();
 			}
 			else
 			{
@@ -30,7 +31,7 @@
 						str += '<tr><td><button id="reverseXButton" class="btn btn-inverse what"onclick="reverseX();">Reverse velocity (x)</button></td><td><button id="reverseYButton" class="btn btn-inverse what"onclick="reverseY();">Reverse velocity (y)</button></td></tr>';
 						str += '<tr><td><button id="addInstantiateObject" class="btn btn-inverse what" onclick="addInstantiateObject();">Create object</button></td><!-- Only after instantiated button has been pressed --><td><button id="addInstantiateObjectVelY" class="btn btn-inverse what" onclick="addInstantiateObjectVelY();">Set created object vel y</button></td><td><button id="addInstantiateObjectVelX" class="btn btn-inverse what" onclick="addInstantiateObjectVelX();">Set created object vel x</button></td><td><button id="addInstantiateObjectPosY" class="btn btn-inverse what" onclick="addInstantiateObjectPosY();">Set created object pos y</button></td><td><button id="addInstantiateObjectPosX" class="btn btn-inverse what" onclick="addInstantiateObjectPosX();">Set created object pos x</button></td><td><button id="doneInstantiatedButton" class="btn btn-inverse what" onclick="hideInstantiated();" >Done with instantiation</button></tr>';
 						str += '<tr><td><button id="destroySelf" class="btn btn-inverse what" onclick="addDestroySelf();">Destroy self</button></td></tr><tr><!-- Only if in Collider Set of buttons --><td><button id="ifColliderTag" class="btn btn-inverse what" onclick="addIfColliderTag();">if (collider.tag){} </button></td><td><button id="destroyCollider" class="btn btn-inverse what" onclick="addDestroyCollider();">Destroy collider</button></td></tr><tr><!-- Only if in update set of buttons --><td><button id="ifKeyPressed" class="btn btn-inverse what" onclick="addInputKeyPressed();">if (key pressed){} </button></td><td><button id="ifKeyDown" class="btn btn-inverse what" onclick="addInputKeyDown();">if (key down){} </button></td><td><button id="ifKeyUp" class="btn btn-inverse what" onclick="addInputKeyUp();">if (key up){} </button></td></tr>';
-						str += '<tr><td><button class="btn btn-inverse what" onclick="endIf()">End If</button></td></tr><tr><td><button class="btn btn-inverse what" onclick="save()">Save</button></td><td><button class="btn btn-inverse what" onclick="createBlueprint()">Create blueprint</button></td><td><button class="btn btn-inverse what" onclick="loadJSON()">load blueprint</button></td></tr>';
+						str += '<tr><td><button class="btn btn-inverse what" onclick="endIf()">End If</button></td></tr><tr><td><button class="btn btn-inverse what" onclick="save()">Save Object</button></td></tr>';
 
 						str += '<tr><td><button class="btn btn-inverse what" onclick=\'changeEditingState("collide");\'>Modify oncollide</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("init");\'>Modify oninit</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("update");\'>Modify onupdate</button></td></tr></tbody></table>';
 					document.getElementById('buttonsDiv').innerHTML = str;
@@ -40,7 +41,7 @@
 		}
 	</script>
 </head>
-<body>
+<body onload="init();">
 
 	<div id="content">
 		<div class="navbar navbar-inverse navbar-fixed-top">
@@ -57,9 +58,9 @@
 	
 	<div id="main">
 	
-		<div id="canvas">
+		<canvas id="canvas">
 			
-		</div>
+		</canvas>
 		
 		<div class="left">
 			<h2>
@@ -72,13 +73,15 @@
 			<h2>
 				Blueprints
 			</h2>
+			<ul>
+				<li><button onclick='updateButtons("create_blueprint");'>Create blueprint</button></li>
+			</ul>
 		</div>		
 			<div id="bottom">
 				<div class="hero-unit">
 					<div id="textEdit">
 						<textarea id="text" rows="10" cols="10"></textarea>
 					</div>
-					<button onclick='updateButtons("create_blueprint");'>Create blueprint</button>
 					<div id="buttonsDiv">
 					</div>
 				<div>	
