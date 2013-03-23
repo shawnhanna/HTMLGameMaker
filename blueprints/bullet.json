@@ -2,12 +2,12 @@
 	"tag": "bullet",
 	"transform":
 	{
-		"Position" 
+		"Position" :
 		{
 			"x":"0",
 			"y":"0"
 		},
-		"Velocity"
+		"Velocity":
 		{
 			"x":"0",
 			"y":"0"
@@ -19,8 +19,8 @@
 	},
 	"functs":
 	{
-		"OnInit":"this.transform.Velocity.y = -3;",
-		"OnUpdate":"",
+		"OnInit":"this.transform.Velocity.y = -30;",
+		"OnUpdate":"if (this.transform.Position.y < 0) { this.doRemove = true;}",
 		"OnCollide":""
 	}
 }

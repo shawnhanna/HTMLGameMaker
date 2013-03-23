@@ -30,8 +30,6 @@ function init()
 
 function gameLoop()
 {
-	d = new Date();
-	lastFrameTime = d.getTime();
 	
 	Input.Update();
 	if (Input.getKeyDown(80))
@@ -81,7 +79,4 @@ function gameLoop()
 			}
 		}
 	}
-	d = new Date();
-	currentFrameTime = d.getTime();
-	delta = (currentFrameTime - lastFrameTime)/1000;
 }

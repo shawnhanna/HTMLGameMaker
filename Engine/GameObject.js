@@ -65,8 +65,8 @@ function GameObject()
 		
 		eval(onupdate);
 
-		this.transform.Position.x += this.transform.Velocity.x*delta;
-		this.transform.Position.y += this.transform.Velocity.y*delta;
+		this.transform.Position.x += this.transform.Velocity.x;
+		this.transform.Position.y += this.transform.Velocity.y;
 	}
 	
 	this.OnCollide = function(collider)
