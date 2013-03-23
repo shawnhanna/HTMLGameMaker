@@ -637,7 +637,7 @@ function saveJSON (argument) {
 function redrawBlueprints (bps) {
 	bps = JSON.parse(bps);
 	str = "<h2>Blueprints</h2><br>";
-	str += '<button onclick=\'updateButtons("create_blueprint");\'>Create blueprint</button><br>';
+	str += '<button class=\'btn-large btn-primary\' onclick=\'updateButtons("create_blueprint");\'>Create blueprint</button><br>';
 	if (bps!= null){
 		str += "<ul>";
 		for (var i = bps.length - 1; i >= 0; i--) {
@@ -657,7 +657,7 @@ document.getElementById('right').innerHTML = str;
 
 function getSceneGraph (argument) {
 	str = "<h2>Objects</h2><br>";
-	str += '<button onclick=\'saveScene();\'>Save Scene</button><br>';
+	str += '<button class=\'btn-large btn-success\' onclick=\'saveScene();\'>Save Scene</button><br>';
 	console.log(SceneGraph);
 	if (SceneGraph != null){
 		str += "<table>";
