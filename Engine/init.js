@@ -13,10 +13,6 @@ function init()
 	
 	loadScene("Engine/scene.json");
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 12a7de8d9dc4badcdd74bdcdc88878652c271d26
 	IntervalID = setInterval(gameLoop, 1000 / 30);
 }
 
@@ -72,11 +68,6 @@ function gameLoop()
 		if (SceneGraph[i].doRemove)
 		{
 			SceneGraph.splice(i, 1);
-		}
-		if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
-		{
-			objectSelected(SceneGraph[i]);
-			console.log(SceneGraph[i]);
 		}
 	}
 }
