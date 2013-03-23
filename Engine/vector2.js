@@ -20,4 +20,11 @@ function Vector2()
 		this.x += other.x;
 		this.y += other.y;
 	}
+	this.times = function(other)
+	{
+		this.x *= other;
+		this.y *= other;
+		console.log(this);
+		return this;
+	}
 }

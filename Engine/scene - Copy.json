@@ -1,0 +1,38 @@
+{
+	"object1": 
+	{
+		"blueprint": "ship.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "270",
+				"y": "300"
+			}
+		}
+	},
+	"object2": 
+	{
+		"blueprint": "thing.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "150",
+				"y": "40"
+			}
+		}
+	},
+	"object3": 
+	{
+		"blueprint": "thing2.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "20",
+				"y": "100"
+			}
+		}
+	}
+}

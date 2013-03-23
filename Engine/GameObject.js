@@ -51,7 +51,7 @@ function GameObject()
 		eval(oninit);
 	}
 	
-	this.Update = function(ctx)
+	this.Update = function(ctx, delta)
 	{
 		this.Collider.x = parseInt(this.transform.Position.x);
 		this.Collider.y = parseInt(this.transform.Position.y);
@@ -62,8 +62,11 @@ function GameObject()
 		{
 			components[i].Update(ctx);
 		}
-		this.transform.Position.plus(this.transform.Velocity);
+		
 		eval(onupdate);
+
+		this.transform.Position.x += this.transform.Velocity.x*delta;
+		this.transform.Position.y += this.transform.Velocity.y*delta;
 	}
 	
 	this.OnCollide = function(collider)

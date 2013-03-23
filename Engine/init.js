@@ -4,6 +4,11 @@ var SceneGraph = new Array();
 var IntervalID;
 var gameRunning = true;
 
+var d = new Date();
+var lastFrameTime = 0; 
+var currentFrameTime = 0;
+var delta = 0;
+
 function init()
 {
 	var stopped = false;
@@ -20,32 +25,32 @@ function init()
 		Input.Init();
 		IntervalID = setInterval(gameLoop, 1000 / 30);
 	}
+	currentFrameTime = d.getTime();
 }
 
 function gameLoop()
 {
+	d = new Date();
+	lastFrameTime = d.getTime();
+	
 	Input.Update();
+	if (Input.getKeyDown(80))
+	{
+		gameRunning = gameRunning? false : true;
+	}
 	if (Input.getKeyDown(27))
 	{
-		if (!gameRunning)
-		{
-			init();
-		}
-		gameRunning = gameRunning? false : true;
-		
+		gameRunning = true;
+		init();
 	}
 	if (gameRunning)
 	{
-		if (Input.getKeyDown(81))
-		{
-			clearInterval(IntervalID);
-		}
 		ctx.fillStyle = "rgb(255,255,255)";
 		ctx.fillRect(0, 0,600,600);
 		
 		for(var i = 0; i < SceneGraph.length; i++)
 		{
-			SceneGraph[i].Update(ctx);
+			SceneGraph[i].Update(ctx, delta);
 			
 			if (_selectedObject != null)
 			{
@@ -76,4 +81,7 @@ function gameLoop()
 			}
 		}
 	}
+	d = new Date();
+	currentFrameTime = d.getTime();
+	delta = (currentFrameTime - lastFrameTime)/1000;
 }
