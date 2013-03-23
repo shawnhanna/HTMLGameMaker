@@ -1,7 +1,7 @@
 <html>
 <head>
-	<link href="/css/bootstrap.css" rel="stylesheet" type="text/css">
-	<link href="/css/style.css" rel="stylesheet" type="text/css" /> 
+	<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+	<link href="css/style.css" rel="stylesheet" type="text/css" /> 
 	<title>game!!!</title>
 	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="Engine/Input.js"></script>
@@ -36,7 +36,7 @@
 			if (state == "init" || state == "collide" || state == "update" || state =="view")
 			{
 				str = '<table class="table-nonfluid">';
-				str += '<tbody><tr><td><button id="addVelX" class="btn btn-inverse what" onclick="addVelX();">Set velocity X</button></td><td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity Y</button></td><td><button id="addVelA" class="btn btn-inverse what"onclick="addVelAngle();">Set velocity (speed & angle in radians)</button><td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos X</button></td><td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos Y</button></td></tr>'
+				str += '<tbody><tr><td><button id="addVelX" class="btn btn-inverse what" onclick="addVelX();">Set velocity X</button></td><td><button id="addVelY" class="btn btn-inverse what"onclick="addVelY();">Set velocity Y</button></td><td><button id="addVelA" class="btn btn-inverse what"onclick="addVelAngle();">Set velocity (speed & angle in radians)</button><td><button id="addPosRelX" class="btn btn-inverse what"onclick="addPosRelativeX();">Set relative pos X</button></td><td><button id="addPosRelY" class="btn btn-inverse what"onclick="addPosRelativeY();">Set relative pos Y</button></td><td><button id="stopSelfButton" class="btn btn-inverse what"onclick="stopSelf();">Stop Self</button></td></tr>'
 				str += '<tr><td><button id="reverseXButton" class="btn btn-inverse what"onclick="reverseX();">Reverse velocity (x)</button></td><td><button id="reverseYButton" class="btn btn-inverse what"onclick="reverseY();">Reverse velocity (y)</button></td></tr>';
 				str += '<tr><td><button id="addInstantiateObject" class="btn btn-inverse what" onclick="addInstantiateObject();">Create object</button></td><td><button id="addInstantiateObjectVelY" class="btn btn-inverse what" onclick="addInstantiateObjectVelY();">Set created object vel y</button></td><td><button id="addInstantiateObjectVelX" class="btn btn-inverse what" onclick="addInstantiateObjectVelX();">Set created object vel x</button></td><td><button id="addInstantiateObjectPosY" class="btn btn-inverse what" onclick="addInstantiateObjectPosY();">Set created object pos y</button></td><td><button id="addInstantiateObjectPosX" class="btn btn-inverse what" onclick="addInstantiateObjectPosX();">Set created object pos x</button></td><td><button id="doneInstantiatedButton" class="btn btn-inverse what" onclick="hideInstantiated();" >Done with instantiation</button></tr>';
 				str += '<tr><td><button id="destroySelf" class="btn btn-inverse what" onclick="addDestroySelf();">Destroy self</button></td></tr><tr><td><button id="ifColliderTag" class="btn btn-inverse what" onclick="addIfColliderTag();">if (collider.tag){} </button></td><td><button id="destroyCollider" class="btn btn-inverse what" onclick="addDestroyCollider();">Destroy collider</button></td></tr><tr><td><button id="ifKeyPressed" class="btn btn-inverse what" onclick="addInputKeyPressed();">if (key pressed){} </button></td><td><button id="ifKeyDown" class="btn btn-inverse what" onclick="addInputKeyDown();">if (key down){} </button></td><td><button id="ifKeyUp" class="btn btn-inverse what" onclick="addInputKeyUp();">if (key up){} </button></td>';
@@ -55,8 +55,7 @@
 
 	</script>
 </head>
-<body onload="init();getBP();">
-
+<body onload="init();setTimeout(function(){getBP();getSceneGraph();}, 100);">
 	<div id="content">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
@@ -75,10 +74,7 @@
 		<canvas id="canvas" height="400" width="540">
 		</canvas>
 		
-		<div class="left">
-			<h2>
-				Objects
-			</h2>
+		<div id="left" class="left">
 		</div>
 		
 		<div id="right" class="right">

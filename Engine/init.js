@@ -19,7 +19,7 @@ function init()
 	
 	SceneGraph.splice(0, SceneGraph.length);
 	loadScene("Engine/scene.json");
-
+	console.log(SceneGraph);
 	if (IntervalID == null)
 	{
 		Input.Init();

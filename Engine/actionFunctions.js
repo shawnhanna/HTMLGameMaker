@@ -63,6 +63,15 @@ function objectSelected (argument) {
 	updateButtons("view");
 }
 
+function objectSelectedIndex (arg) {
+	objectSelected(SceneGraph[arg]);
+}
+
+function deleteObjectIndex (arg) {
+	SceneGraph.splice(arg,1);
+	getSceneGraph();
+}
+
 function blueprintSelected (argument) {
 	_selectedObject = null;
 	_selectedBlueprint = argument;
@@ -121,6 +130,7 @@ function hideAllActionButtons (argument) {
 	$("#saveObjButton").hide();
 
 	$("#destroySelf").hide();
+	$("#stopSelfButton").hide();
 	$("#ifColliderTag").hide();
 	$("#ifKeyPressed").hide();
 	$("#ifKeyDown").hide();
@@ -151,6 +161,7 @@ function showAllActionButtons (argument) {
 	$("#saveObjButton").show();
 
 	$("#destroySelf").show();
+	$("#stopSelfButton").show();
 	$("#ifColliderTag").show();
 	$("#ifKeyPressed").show();
 	$("#ifKeyDown").show();
@@ -183,17 +194,32 @@ function addPosRelativeY () {
 	createArray();
 }
 
-function addVelY () {
-	velocity = prompt("Enter a velocity", "0");
+function addVelY (arg) {
+	var velocity = null;
+	if (arg != null)
+	{
+		velocity = arg;
+	}
+	else
+	{
+		velocity = prompt("Enter a velocity", "0");
+	}
 	if (velocity == null)
 		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.y = "+velocity+";");
 	createArray();
 }
 
-
-function addVelX () {
-	velocity = prompt("Enter a velocity", "0");
+function addVelY (arg) {
+	var velocity = null;
+	if (arg != null)
+	{
+		velocity = arg;
+	}
+	else
+	{
+		velocity = prompt("Enter a velocity", "0");
+	}
 	if (velocity == null)
 		return false;
 	$("#text").val ( $("#text").val() + "this.transform.Velocity.x = "+velocity+";");
@@ -231,6 +257,11 @@ function addDestroyCollider() {
 	createArray();
 }
 
+function stopSelf(){
+	addVelX(0);
+	addVelY(0);
+}
+
 function addInstantiateObject() {
 	var blueprint = prompt("which blueprint are you creating this from","");
 	if (blueprint == null)
@@ -251,7 +282,7 @@ function addInstantiateObjectVelX () {
 	{
 		return false;
 	}
-	$("#text").val ( $("#text").val() + "x.transform.Velocity.X = "+vel+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Velocity.x = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectVelY () {
@@ -260,7 +291,7 @@ function addInstantiateObjectVelY () {
 	{
 		return false;
 	}
-	$("#text").val ( $("#text").val() + "x.transform.Velocity.Y = "+vel+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Velocity.y = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectPosY () {
@@ -269,7 +300,7 @@ function addInstantiateObjectPosY () {
 	{
 		return false;
 	}
-	$("#text").val ( $("#text").val() + "x.transform.Position.Y = "+pos+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Position.y = "+pos+";\n");
 	return true;
 }
 function addInstantiateObjectPosX () {
@@ -278,7 +309,7 @@ function addInstantiateObjectPosX () {
 	{
 		return false;
 	}
-	$("#text").val ( $("#text").val() + "x.transform.Position.X = "+pos+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Position.x = "+pos+";\n");
 	return true;
 }
 
@@ -578,9 +609,7 @@ function redrawBlueprints (bps) {
 	if (bps!= null){
 		str += "<ul>";
 		for (var i = bps.length - 1; i >= 0; i--) {
-			console.log("Got stuff: "+bps[i]);
 			bps[i] = bps[i].substr(0, bps[i].length-5);
-			console.log("Got stuff: "+bps[i]);
 			str += '<li><a href="#" onclick=\'blueprintSelected("';
 			str+=bps[i];
 			str += '")\'>'+bps[i]+"</a></li>";
@@ -592,6 +621,30 @@ function redrawBlueprints (bps) {
 		alert("NO blueprints found");
 	}
 	document.getElementById('right').innerHTML = str;
+}
+
+function getSceneGraph (argument) {
+	str = "<h2>Objects</h2><br>";
+	str += '<button onclick=\'saveScene();\'>Save Scene</button><br>';
+	console.log(SceneGraph);
+	if (SceneGraph != null){
+		str += "<table>";
+		for (var i = SceneGraph.length - 1; i >= 0; i--) {
+			var tempName = SceneGraph[i].blueprint.substr(0, SceneGraph[i].blueprint.length-5);
+			str += '<tr><td><a href="#" onclick=\'objectSelectedIndex("';
+			str += i;
+			str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
+			str += '<td><a href="#" onclick=\'deleteObjectIndex("';
+			str += i;
+			str += '")\'>remove</a></td></tr>';
+		};
+		str += "</table>";
+		document.getElementById('left').innerHTML = str;
+	}
+	else
+	{
+		alert("NO objects found");
+	}
 }
 
 function getBP () {
