@@ -22,6 +22,7 @@ var o;
 
 function changeEditingState (state) {
 	_currentlyChanging = state;
+	showAllActionButtons();
 	if (_currentlyChanging == "update")
 	{
 		//show the key press button(s)
@@ -43,6 +44,13 @@ function changeEditingState (state) {
 		hideUpdateButtons();
 		showCollideButtons();
 	}
+	else if(_currentlyChanging == "view")
+	{
+		hideInitButtons();
+		hideUpdateButtons();
+		hideCollideButtons();
+		hideAllActionButtons();
+	}
 }
 
 ///argument is the object that is selected
@@ -50,6 +58,7 @@ function objectSelected (argument) {
 	_selectedBlueprint = null;
 	_selectedObject = argument;
 	document.getElementById('spriteName').innerHTML = "Editing object of type: "+_selectedObject.blueprint;
+	updateButtons("view");
 }
 
 function blueprintSelected (argument) {
@@ -73,6 +82,67 @@ function showInitButtons (argument) {
 function hideCollideButtons (argument) {
 	$("#ifColliderTag").hide();
 	$("#destroyCollider").hide();
+}
+
+function hideAllActionButtons (argument) {
+	hideCollideButtons();
+	hideInitButtons();
+	hideUpdateButtons();
+
+	$("#addVelX").hide();
+	$("#addVelY").hide();
+	$("#addVelA").hide();
+
+	$("#addPosRelX").hide();
+	$("#addPosRelY").hide();
+	$("#reverseXButton").hide();
+	$("#reverseYButton").hide();
+
+	$("#addInstantiateObject").hide();
+	$("#addInstantiateObjectVelY").hide();
+	$("#addInstantiateObjectVelX").hide();
+	$("#addInstantiateObjectPosY").hide();
+	$("#addInstantiateObjectPosX").hide();
+	$("#doneInstantiatedButton").hide();
+
+	$("#saveObjButton").hide();
+
+	$("#destroySelf").hide();
+	$("#ifColliderTag").hide();
+	$("#ifKeyPressed").hide();
+	$("#ifKeyDown").hide();
+	$("#ifKeyUp").hide();
+	$("#endIf").hide();
+}
+
+function showAllActionButtons (argument) {
+	showCollideButtons();
+	showInitButtons();
+	showUpdateButtons();
+	$("#addVelX").show();
+	$("#addVelY").show();
+	$("#addVelA").show();
+
+	$("#addPosRelX").show();
+	$("#addPosRelY").show();
+	$("#reverseXButton").show();
+	$("#reverseYButton").show();
+
+	$("#addInstantiateObject").show();
+	$("#addInstantiateObjectVelY").show();
+	$("#addInstantiateObjectVelX").show();
+	$("#addInstantiateObjectPosY").show();
+	$("#addInstantiateObjectPosX").show();
+	$("#doneInstantiatedButton").show();
+	
+	$("#saveObjButton").show();
+
+	$("#destroySelf").show();
+	$("#ifColliderTag").show();
+	$("#ifKeyPressed").show();
+	$("#ifKeyDown").show();
+	$("#ifKeyUp").show();
+	$("#endIf").show();
 }
 
 function hideInitButtons (argument) {
@@ -421,7 +491,6 @@ function saveJSON (argument) {
 	//alert(str);
 	//save to file
 	$.post("/", { filename: _selectedBlueprint+".json", data: str});
-	alert("Saved json");
 }
 
 function loadJSON (filename) {
@@ -442,10 +511,12 @@ function loadJSON (filename) {
 function redrawBlueprints (bps) {
 	str = "<h2>Blueprints</h2><br>";
 	str += '<button onclick=\'updateButtons("create_blueprint");\'>Create blueprint</button><br>';
-	str += "<ul>";
-	for (var i = bps.length - 1; i >= 0; i--) {
-		str += "<li>"+bps[i]+"</li>";
-	};
-	str += "</ul>";
+	if (bps!= null){
+		str += "<ul>";
+		for (var i = bps.length - 1; i >= 0; i--) {
+			str += "<li>"+bps[i]+"</li>";
+		};
+		str += "</ul>";
+	}
 	document.getElementById('right').innerHTML = str;
 }
