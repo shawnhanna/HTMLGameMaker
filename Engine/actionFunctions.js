@@ -63,6 +63,15 @@ function objectSelected (argument) {
 	updateButtons("view");
 }
 
+function objectSelectedIndex (arg) {
+	objectSelected(SceneGraph[arg]);
+}
+
+function deleteObjectIndex (arg) {
+	SceneGraph.splice(arg,1);
+	getSceneGraph();
+}
+
 function blueprintSelected (argument) {
 	_selectedObject = null;
 	_selectedBlueprint = argument;
@@ -619,17 +628,17 @@ function getSceneGraph (argument) {
 	str += '<button onclick=\'saveScene();\'>Save Scene</button><br>';
 	console.log(SceneGraph);
 	if (SceneGraph != null){
-		str += "<ul>";
+		str += "<table>";
 		for (var i = SceneGraph.length - 1; i >= 0; i--) {
-			alert("i = "+i);
-			console.log("Got scene stuff: "+SceneGraph[i].blueprint);
 			var tempName = SceneGraph[i].blueprint.substr(0, SceneGraph[i].blueprint.length-5);
-			console.log("Got scene stuff: "+SceneGraph[i].blueprint);
-			str += '<li><a href="#" onclick=\'objectSelected("';
-			str += SceneGraph[i];
-			str += '")\'>'+SceneGraph[i].blueprint+"</a></li>";
+			str += '<tr><td><a href="#" onclick=\'objectSelectedIndex("';
+			str += i;
+			str += '")\'>'+SceneGraph[i].blueprint+"</a></td>";
+			str += '<td><a href="#" onclick=\'deleteObjectIndex("';
+			str += i;
+			str += '")\'>remove</a></td></tr>';
 		};
-		str += "</ul>";
+		str += "</table>";
 		document.getElementById('left').innerHTML = str;
 	}
 	else
