@@ -22,6 +22,52 @@ var o;
 
 function changeEditingState (state) {
 	_currentlyChanging = state;
+	if (_currentlyChanging == "update")
+	{
+		//show the key press button(s)
+		hideInitButtons();
+		hideCollideButtons();
+		showUpdateButtons();
+	}
+	else if (_currentlyChanging == "init")
+	{
+		// show initialization buttons?
+		hideUpdateButtons();
+		hideCollideButtons();
+		showInitButtons();
+	}
+	else if (_currentlyChanging == "collide")
+	{
+		//show the collide buttons
+		hideInitButtons();
+		hideUpdateButtons();
+		showCollideButtons();
+	}
+}
+
+
+function showUpdateButtons (argument) {
+	$("#ifKeyPressed").show();
+	$("#ifKeyUp").show();
+	$("#ifKeyDown").show();
+}
+function showCollideButtons (argument) {
+	$("#ifColliderTag").show();
+	$("#destroyCollider").show();
+}
+function showInitButtons (argument) {
+}
+
+function hideCollideButtons (argument) {
+	$("#ifColliderTag").hide();
+	$("#destroyCollider").hide();
+}
+function hideInitButtons (argument) {
+}
+function hideUpdateButtons (argument) {
+	$("#ifKeyPressed").hide();
+	$("#ifKeyUp").hide();
+	$("#ifKeyDown").hide();
 }
 
 function setVelocityX(speed)
@@ -227,11 +273,31 @@ function getFunctionFromCommands() {
 	return $("#text").val();
 }
 
-function addInputKeyDown () {
+function addInputKeyPressed () {
 	var keyNum = prompt("What key? (use only alphanumeric)","w");
 	var num = keyNum.charCodeAt(0);
 	//alert("that is ascii value: "+num);
 	str = "var isPressed = Input.getKey("+num+")\n";
+	str = str+"if (isPressed){\n";
+
+	$("#text").val ( $("#text").val() + str);
+}
+
+function addInputKeyDown () {
+	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	var num = keyNum.charCodeAt(0);
+	//alert("that is ascii value: "+num);
+	str = "var isPressed = Input.getKeyDown("+num+")\n";
+	str = str+"if (isPressed){\n";
+
+	$("#text").val ( $("#text").val() + str);
+}
+
+function addInputKeyUp () {
+	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	var num = keyNum.charCodeAt(0);
+	//alert("that is ascii value: "+num);
+	str = "var isPressed = Input.getKeyUp("+num+")\n";
 	str = str+"if (isPressed){\n";
 
 	$("#text").val ( $("#text").val() + str);
@@ -285,17 +351,17 @@ function save () {
 
 	if(_currentlyChanging != null)
 	{
-		if (_currentlyChanging == "onCollide")
+		if (_currentlyChanging == "collide")
 		{
 			this.setOnCollide($("#text").val());
 			o["funct"]["OnCollide"] = $("#text").val();
 		}
-		else if(_currentlyChanging == "onInit")
+		else if(_currentlyChanging == "init")
 		{
 			this.setOnInit($("#text").val());
 			o["funct"]["OnCollide"] = $("#text").val();
 		}
-		else if(_currentlyChanging == "onUpdate"){
+		else if(_currentlyChanging == "update"){
 			this.setOnUpdate($("#text").val());
 			o["funct"]["OnCollide"] = $("#text").val();
 		}
