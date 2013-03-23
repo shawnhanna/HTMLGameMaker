@@ -55,12 +55,11 @@
 	function runStuff () {
 		getBP();
 		getSceneGraph();
-		setTimeout(runStuff, 1000);
 	}
 
 	</script>
 </head>
-<body onload="init();runStuff();">
+<body onload="init();setInterval(runStuff(),1000);">
 	<div id="content">
 		<div class="navbar navbar-inverse navbar-fixed-top">
 			<div class="navbar-inner">
