@@ -6,6 +6,7 @@
 
 	function myFunction()
 	{
+		createArray();
 	}
 
 	var _selectedObject = null;
@@ -109,29 +110,56 @@
 	function addVelX () {
 		//velocity = $("#addVelX").val();
 		velocity = prompt("Enter a velocity", "0");
-		commandList.push("setVelocityX("+velocity+");");
-		redrawTextArea();
+		$("#text").val ( $("#text").val() + "setVelocityX("+velocity+");");
+		createArray();
 	}
 	function addVelY () {
 		//velocity = $("#addVelX").val();
 		velocity = prompt("Enter a velocity", "0");
-		commandList.push("setVelocityY("+velocity+");");
-		redrawTextArea();
+		$("#text").val ( $("#text").val() + "setVelocityY("+velocity+");");
+		createArray();
+	}
+	function addVelAngle () { 	
+		velocity = prompt("Enter a velocity", "0");
+		angle = prompt("Enter an angle (radians)", "0");
+		$("#text").val ( $("#text").val() + "setVelocity("+velocity+", "+angle+");");
+		createArray();
 	}
 
 	function reverseX() {
-		commandList.push("reverseVelX();");
-		redrawTextArea();
+		$("#text").val ( $("#text").val() + "reverseVelX();");
+		createArray();
 	}
 	function reverseY() {
-		commandList.push("reverseVelY();");
+		$("#text").val ( $("#text").val() + "reverseVelY();");
+		createArray();
+	}
+
+
+	function addDestroyObject() {
+		$("#text").val ( $("#text").val() + "destroyObject();");
+		createArray();
+	}
+	function addInstantiateObject() {
+		$("#text").val ( $("#text").val() + "instantiateObject();");
+		createArray();
+	}
+
+	function createArray () {
+		commandList = new Array();
+		arr = $("#text").val().split("\n");
+		for (var i=0; i<arr.length; i++) {
+			if (arr[i] != "")
+				commandList.push(arr[i]);
+		}
 		redrawTextArea();
 	}
 
+
 	function instantiateObject() {
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: instantiateObject run w/o a selected blueprint");
+			alert("ERROR: instantiateObject run w/o a selected object");
 			return false;
 		}
 		else
@@ -142,9 +170,9 @@
 
 	function destroyObject ()
 	{
-		if (_selectedBlueprint == null)
+		if (_selectedObject == null)
 		{
-			alert("ERROR: destroyObject run w/o a selected blueprint");
+			alert("ERROR: destroyObject run w/o a selected object");
 			return false;
 		}
 		else
@@ -159,6 +187,7 @@
 
 	function redrawTextArea()
 	{
+		$("#text").val("");
 		for (var i = 0; i<commandList.length; i++) {
 			$("#text").val( $("#text").val() + commandList[i] + "\n");
 		};
@@ -180,8 +209,8 @@
 <button id="reverseXButton" onclick="reverseX();">Reverse velocity (x)</button>
 <button id="reverseYButton" onclick="reverseY();">Reverse velocity (y)</button>
 <br>
-<button id="instantiateObject" onclick="instantiateObject();">Create object</button>
-<button id="destroyObject" onclick="destroyObject();">Destroy object</button>
+<button id="instantiateObject" onclick="addInstantiateObject();">Create object</button>
+<button id="destroyObject" onclick="addDestroyObject();">Destroy object</button>
 <br>
 <button onclick="myFunction()">Click me</button>
 </div>
