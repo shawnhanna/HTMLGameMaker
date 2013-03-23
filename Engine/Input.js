@@ -5,6 +5,7 @@ Input.Init = function()
 	Input.lastKeysDown = new Array();
 	Input.currentKeys = new Array();
 	Input.keysDown = new Array();
+	Input.mousePos = new Vector2();
 
 	var addKey = function(event)
 	{
@@ -19,9 +20,14 @@ Input.Init = function()
 		var key = event.keyCode;
 		Input.keysDown.splice(Input.keysDown.indexOf(key), 1);
 	}
+	var onMouse = function(event)
+	{
+		Input.mousePos.x = event.
+	}
 	
 	window.addEventListener("keydown", addKey);
 	window.addEventListener("keyup", removeKey);
+	window.addEventListener("mousedown", onMouse);
 }
 Input.Update = function()
 {
