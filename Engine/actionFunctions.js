@@ -69,7 +69,7 @@ function objectSelectedIndex (arg) {
 
 function deleteObjectIndex (arg) {
 	SceneGraph.splice(arg,1);
-	getSceneGraph();
+	getSceneGraph();	
 }
 
 function blueprintSelected (argument) {
@@ -651,4 +651,8 @@ function getBP () {
 	$.get("/getBP", function(data){
 		redrawBlueprints(data);
 	});
+}
+
+function displayValues () {
+	
 }
