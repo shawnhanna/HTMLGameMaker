@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 
 app.use(express.bodyParser());
-app.use(express['static'](__dirname + '/Engine'));
+app.use(express['static'](__dirname));
 
 app.post('/', function(req, res) {
 	console.log(req.body.filename);
