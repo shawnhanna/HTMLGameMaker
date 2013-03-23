@@ -389,19 +389,25 @@ function load () {
 	}
 }
 
-function saveJSON (argument) {
-	var o = {
+function createBlueprint (argument) {
+	var name = prompt("What is the name of your blueprint");
+	if (name != null)
+	{
+		_selectedBlueprint = name;
+		saveJSON();
+
+		o = {
 		"tranform":
 		{
 			"Position":
 			{
-				"x":10,
-				"y":20
+				"x":0,
+				"y":0
 			},
 			"Velocity":
 			{
-				"x":10,
-				"y":20
+				"x":0,
+				"y":0
 			}
 		},
 		"texture":
@@ -410,11 +416,33 @@ function saveJSON (argument) {
 		},
 		"funct":
 		{
-			"OnCollide":$("#text").val(),
-			"OnInit":$("#text").val(),
-			"OnUpdate":$("#text").val()
+			"OnCollide":"",
+			"OnInit":"",
+			"OnUpdate":""
 		}
 	}
+	}
+}
+var o;
+///save blueprint in json format
+function saveJSON (argument) {
 	str = JSON.stringify(o);
 	alert(str);
+	//save to file
+}
+
+function loadJSON (filename) {
+	filename = "Engine/thing.json";
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function()
+	{
+		if (request.readyState==4)
+		{
+			var jObject = JSON.parse(request.responseText);
+			o = jObject;
+
+		}
+	}
+	request.open("GET", filename, true);
+	request.send();
 }
