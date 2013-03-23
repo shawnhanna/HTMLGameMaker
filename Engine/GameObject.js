@@ -2,20 +2,25 @@ function GameObject()
 {
 	var components = new Array();
 	this.transform = new Transform();
+	var texture = new Texture2D();
+	texture.load("img.png");
+	components.push(texture);
 
-	var Init = function()
+	this.Init = function()
 	{
-		for (component in Components)
+		components[0].Init(this);
+		for (component in components)
 		{
-			component.Init(this);
+			//component.Init(this);
 		}
 	}
 	
-	var Update = function()
+	this.Update = function(ctx)
 	{
-		for (component in Components)
+		components[0].Update(ctx);
+		for (component in components)
 		{
-			component.Update();
+			//component.Update(ctx);
 		}
 	}
 }

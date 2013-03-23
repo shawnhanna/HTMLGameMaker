@@ -1,0 +1,11 @@
+{
+	transform: 
+	{
+		x: 10,
+		y: 10
+	},
+	texture:
+	{
+		src: "img.png"
+	}
+}
