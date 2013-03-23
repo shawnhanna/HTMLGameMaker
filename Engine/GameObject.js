@@ -4,6 +4,9 @@ function GameObject()
 	this.transform = new Transform();
 	this.Collider = new Rect();
 	
+	this.doRemove = false;
+	this.tag = "";
+	
 	var oncollide;
 	var onupdate;
 	var oninit;
@@ -62,7 +65,7 @@ function GameObject()
 		eval(onupdate);
 	}
 	
-	this.OnCollide = function()
+	this.OnCollide = function(collider)
 	{
 		eval(oncollide);
 	}

@@ -1,4 +1,4 @@
-function GameObjectFactory(filename, sceneGraph)
+function GameObjectFactory(filename)
 {
 	var request = new XMLHttpRequest();
 	
@@ -29,7 +29,8 @@ function GameObjectFactory(filename, sceneGraph)
 				}
 			}
 			gameObject.Init();
-			sceneGraph.push(gameObject);
+			SceneGraph.push(gameObject);
+			return gameObject;
 		}
 	}
 	request.open("GET", filename, true);

@@ -27,7 +27,7 @@ function instantiateObject(argument) {
 	{
 		///TODO: add instantiation code
 		//load from json file
-
+		//return gameObject
 	}
 }
 
@@ -183,19 +183,19 @@ function reverseVelY ()
 
 function addPosRelativeX () {
 	newPos = prompt("Enter a new position x (relative to the current position)", "0");
-	$("#text").val ( $("#text").val() + "setRelativePositionX("+newPos+");");
+	$("#text").val ( $("#text").val() + "this.transform.Position.x += "+newPos+";");
 	createArray();
 }
 function addPosRelativeY () {
 	newPos = prompt("Enter a new position y (relative to the current position)", "0");
-	$("#text").val ( $("#text").val() + "setRelativePositionY("+newPos+");");
+	$("#text").val ( $("#text").val() + "this.transform.Position.y += "+newPos+";");
 	createArray();
 }
 
 function addVelY () {
 	//velocity = $("#addVelX").val();
 	velocity = prompt("Enter a velocity", "0");
-	$("#text").val ( $("#text").val() + "setVelocityY("+velocity+");");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.y = "+velocity+";");
 	createArray();
 }
 
@@ -203,38 +203,34 @@ function addVelY () {
 function addVelX () {
 	//velocity = $("#addVelX").val();
 	velocity = prompt("Enter a velocity", "0");
-	$("#text").val ( $("#text").val() + "setVelocityX("+velocity+");");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.x = "+velocity+";");
 	createArray();
 }
-function addVelY () {
-	//velocity = $("#addVelX").val();
-	velocity = prompt("Enter a velocity", "0");
-	$("#text").val ( $("#text").val() + "setVelocityY("+velocity+");");
-	createArray();
-}
+
 function addVelAngle () { 	
 	velocity = prompt("Enter a velocity", "0");
 	angle = prompt("Enter an angle (radians)", "0");
-	$("#text").val ( $("#text").val() + "setVelocity("+velocity+", "+angle+");");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.x = Math.cos("+radians+")*"+velocity+";");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.y = Math.sin("+radians+")*"+velocity+";");
 	createArray();
 }
 
 function reverseX() {
-	$("#text").val ( $("#text").val() + "reverseVelX();");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.x *= -1;");
 	createArray();
 }
 function reverseY() {
-	$("#text").val ( $("#text").val() + "reverseVelY();");
+	$("#text").val ( $("#text").val() + "this.transform.Velocity.y *= -1;");
 	createArray();
 }
 
 
 function addDestroySelf() {
-	$("#text").val ( $("#text").val() + "destroySelf();");
+	$("#text").val ( $("#text").val() + "this.doRemove = true;");
 	createArray();
 }
 function addDestroyCollider() {
-	$("#text").val ( $("#text").val() + "destroyCollider();");
+	$("#text").val ( $("#text").val() + "collider.doRemove = true;");
 	createArray();
 }
 
@@ -242,8 +238,7 @@ function addInstantiateObject() {
 	var blueprint = prompt("which blueprint are you creating this from","");
 	if (blueprint != "")
 	{
-		$("#text").val ( $("#text").val() + "var x = instantiateObject(\""+blueprint+"\");");
-		$("#text").val ( $("#text").val() + "GameObjectFactory(\""+blueprint+".json\", "+getSceneGraph()+")");
+		$("#text").val ( $("#text").val() + "var x = GameObjectFactory(\""+blueprint+".json\");");
 		createArray();
 		showInstantiated();
 	}
@@ -251,22 +246,22 @@ function addInstantiateObject() {
 
 function addInstantiateObjectVelX () {
 	var vel = prompt("velocity x", "0");
-	$("#text").val ( $("#text").val() + "x.velocity.X = "+vel+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Velocity.X = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectVelY () {
 	var vel = prompt("velocity y", "0");
-	$("#text").val ( $("#text").val() + "x.velocity.Y = "+vel+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Velocity.Y = "+vel+";\n");
 	return true;
 }
 function addInstantiateObjectPosY () {
 	var pos = prompt("position y", "0");
-	$("#text").val ( $("#text").val() + "x.position.Y = "+pos+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Position.Y = "+pos+";\n");
 	return true;
 }
 function addInstantiateObjectPosX () {
 	var pos = prompt("position x", "0");
-	$("#text").val ( $("#text").val() + "x.position.X = "+pos+";\n");
+	$("#text").val ( $("#text").val() + "x.transform.Position.X = "+pos+";\n");
 	return true;
 }
 
