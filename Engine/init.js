@@ -2,6 +2,7 @@ var ctx;
 
 var SceneGraph = new Array();
 var IntervalID;
+var gameRunning = true;
 
 function init()
 {
@@ -9,65 +10,65 @@ function init()
 	var context = document.getElementById("canvas");
 	ctx = context.getContext('2d');
 	
-	Input.Init();
 	
+	
+	SceneGraph.splice(0, SceneGraph.length);
 	loadScene("Engine/scene.json");
 
-	IntervalID = setInterval(gameLoop, 1000 / 30);
+	if (IntervalID == null)
+	{
+		Input.Init();
+		IntervalID = setInterval(gameLoop, 1000 / 30);
+	}
 }
 
 function gameLoop()
 {
 	Input.Update();
-	
-	// if (Input.getKey(38))
-	// {
-		// SceneGraph[0].transform.Position.y--;
-	// }
-	// if (Input.getKey(40))
-	// {
-		// SceneGraph[0].transform.Position.y++;
-	// }
-	// if (Input.getKey(39))
-	// {
-		// SceneGraph[0].transform.Position.x++;
-	// }
-	// if (Input.getKey(37))
-	// {
-		// SceneGraph[0].transform.Position.x--;
-	// }
-	if (Input.getKeyDown(81))
+	if (Input.getKeyDown(27))
 	{
-		clearInterval(IntervalID);
-	}
-
-	
-
-	ctx.fillStyle = "rgb(255,255,255)";
-	ctx.fillRect(0, 0,600,600);
-	
-	
-	
-	for(var i = 0; i < SceneGraph.length; i++)
-	{
-		SceneGraph[i].Update(ctx);
-		
-		for (var j = 0; j < SceneGraph.length; j++)
+		if (!gameRunning)
 		{
-			if (j != i)
+			init();
+		}
+		gameRunning = gameRunning? false : true;
+		
+	}
+	if (gameRunning)
+	{
+		if (Input.getKeyDown(81))
+		{
+			clearInterval(IntervalID);
+		}
+
+		
+
+		ctx.fillStyle = "rgb(255,255,255)";
+		ctx.fillRect(0, 0,600,600);
+		
+		
+		
+		for(var i = 0; i < SceneGraph.length; i++)
+		{
+			SceneGraph[i].Update(ctx);
+			
+			for (var j = 0; j < SceneGraph.length; j++)
 			{
-				if (SceneGraph[i].Collider.intersects(SceneGraph[j].Collider))
+				if (j != i)
 				{
-					SceneGraph[i].OnCollide(SceneGraph[j]);
+					if (SceneGraph[i].Collider.intersects(SceneGraph[j].Collider))
+					{
+						SceneGraph[i].OnCollide(SceneGraph[j]);
+					}
 				}
 			}
 		}
-	}
-	for (var i = SceneGraph.length-1; i >= 0; i--)
-	{
-		if (SceneGraph[i].doRemove)
+		for (var i = SceneGraph.length-1; i >= 0; i--)
 		{
-			SceneGraph.splice(i, 1);
+			if (SceneGraph[i].doRemove)
+			{
+				SceneGraph.splice(i, 1);
+			}
 		}
 	}
 }
