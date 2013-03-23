@@ -457,52 +457,46 @@ function save () {
 
 ///Loads the callback functions that they are currently 
 function load () {
-	if(_currentlyChanging != null)
-	{
-		if (_selectedObject){
-			if (_currentlyChanging == "collide")
-			{
-				$("#text").val(_selectedObject.getOnCollide());
-			}
-			else if(_currentlyChanging == "init")
-			{
-				$("#text").val(_selectedObject.getOnInit());
-			}
-			else if(_currentlyChanging == "update"){
-				$("#text").val(_selectedObject.getOnUpdate());
-			}
-			createArray();
-			return true;
-		}
-		else if (_selectedBlueprint)
+	if (_selectedObject){
+		if (_currentlyChanging == "collide")
 		{
-			console.log("bp = "+_selectedBlueprint);
-			$.ajax({
-				url:    'blueprints/'+_selectedBlueprint+".json",
-				success: function(result) {
-					o = result;
-					if (_currentlyChanging == "collide")
-					{
-						$("#text").val(o["functs"]["OnCollide"]);
-					}
-					else if(_currentlyChanging == "init")
-					{
-						$("#text").val(o["functs"]["OnInit"]);
-					}
-					else if(_currentlyChanging == "update"){
-						$("#text").val(o["functs"]["OnUpdate"]);
-					}
-					createArray();
-				},
-				async:   false
-			});
-			return true;
+			$("#text").val(_selectedObject.getOnCollide());
 		}
+		else if(_currentlyChanging == "init")
+		{
+			$("#text").val(_selectedObject.getOnInit());
+		}
+		else if(_currentlyChanging == "update"){
+			$("#text").val(_selectedObject.getOnUpdate());
+		}
+		createArray();
+		return true;
 	}
-	else
+	else if (_selectedBlueprint)
 	{
-		alert("Error: no callback function overwriting specified");
-		return false;
+		console.log("bp = "+_selectedBlueprint);
+		$.ajax({
+			url:    'blueprints/'+_selectedBlueprint+".json",
+			dataType: 'json',
+			success: function(result) {
+				//alert("Got data: "+result);
+				o = result;
+				if (_currentlyChanging == "collide")
+				{
+					$("#text").val(o["functs"]["OnCollide"]);
+				}
+				else if(_currentlyChanging == "init")
+				{
+					$("#text").val(o["functs"]["OnInit"]);
+				}
+				else if(_currentlyChanging == "update"){
+					$("#text").val(o["functs"]["OnUpdate"]);
+				}
+				createArray();
+			},
+			async:   false
+		});
+		return true;
 	}
 }
 
@@ -515,6 +509,7 @@ function changeName() {
 }
 
 function changeTag() {
+	load();
 	var newTag = prompt("what is the new tag", o["tag"]);
 	if (newTag != o["tag"])
 	{
@@ -524,6 +519,7 @@ function changeTag() {
 }
 
 function changeInitVelocity() {
+	load();
 	var newVelX = prompt("what is the new velocity (X)", o["transform"]["Velocity"]["x"]);
 	var newVelY = prompt("what is the new velocity (Y)", o["transform"]["Velocity"]["y"]);
 	o["transform"]["Velocity"]["y"] = newVelY;
@@ -532,6 +528,7 @@ function changeInitVelocity() {
 }
 
 function changeInitPosition() {
+	load();
 	var newVelX = prompt("what is the new position (X)", o["transform"]["Position"]["x"]);
 	var newVelY = prompt("what is the new position (Y)", o["transform"]["Position"]["y"]);
 	o["transform"]["Position"]["y"] = newVelY;
