@@ -5,8 +5,8 @@ function Vector2()
 	
 	this.construct = function(x,y)
 	{
-		this.x = x;
-		this.y = y;
+		this.x = parseInt(x);
+		this.y = parseInt(y);
 	}
 	
 	this.normalize = function()
@@ -14,5 +14,10 @@ function Vector2()
 		var length = Math.sqrt(this.x*this.x + this.y*this.y);
 		this.x /= length;
 		this.y /= length;
+	}
+	this.plus = function(other)
+	{
+		this.x += other.x;
+		this.y += other.y;
 	}
 }

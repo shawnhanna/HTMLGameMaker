@@ -21,6 +21,12 @@ function GameObjectFactory(filename, sceneGraph)
 					texture.load(jObject["texture"]["src"]);
 					gameObject.addComponent(texture);
 				}
+				else if (component == "functs")
+				{
+					gameObject.setOnCollide(jObject["functs"]["OnCollide"]);
+					gameObject.setOnUpdate(jObject["functs"]["OnUpdate"]);
+					gameObject.setOnInit(jObject["functs"]["OnInit"]);
+				}
 			}
 			gameObject.Init();
 			sceneGraph.push(gameObject);

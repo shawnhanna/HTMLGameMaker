@@ -1,6 +1,7 @@
 var ctx;
 
 var SceneGraph = new Array();
+var IntervalID;
 
 function init()
 {
@@ -13,7 +14,7 @@ function init()
 	GameObjectFactory("thing.json", SceneGraph);
 	GameObjectFactory("thing2.json", SceneGraph);
 	
-	setInterval(gameLoop, 1000 / 30);
+	IntervalID = setInterval(gameLoop, 1000 / 30);
 	
 }
 
@@ -37,14 +38,32 @@ function gameLoop()
 	{
 		SceneGraph[0].transform.Position.x--;
 	}
+	if (Input.getKeyDown(81))
+	{
+		clearInterval(IntervalID);
+	}
 
 	
 
 	ctx.fillStyle = "rgb(255,255,255)";
 	ctx.fillRect(0, 0,600,600);
 	
+	
+	
 	for(var i = 0; i < SceneGraph.length; i++)
 	{
 		SceneGraph[i].Update(ctx);
+		
+		for (var j = 0; j < SceneGraph.length; j++)
+		{
+			if (j != i)
+			{
+				if (SceneGraph[i].Collider.intersects(SceneGraph[j].Collider))
+				{
+					SceneGraph[i].OnCollide(SceneGraph[j]);
+					SceneGraph[j].OnCollide(SceneGraph[i]);
+				}
+			}
+		}
 	}
 }
