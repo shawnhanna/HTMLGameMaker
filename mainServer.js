@@ -17,7 +17,7 @@ app.post('/', function(req, res) {
 
 app.post('/saveScene', function(req, res)
 {
-	fs.writeFile("scene.json", req.body.data, function(err)
+	fs.writeFile("Engine/scene.json", req.body.data, function(err)
 	{
 		if (err) { console.log(err);}
 	});
@@ -27,6 +27,14 @@ app.post('/saveScene', function(req, res)
 app.get('/getBP', function(req, res) {
 	var allfiles = [];
 	fs.readdir("blueprints/", function(err, files)
+	{
+		res.send(JSON.stringify(files));
+	});
+});
+
+app.get('/getPNG', function(req, res)
+{
+	fs.readdir("images/", function(err, files)
 	{
 		res.send(JSON.stringify(files));
 	});

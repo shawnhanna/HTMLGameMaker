@@ -8,20 +8,20 @@ function loadScene(filename)
 		{
 			jObject = JSON.parse(request.responseText);
 			
-			for (gameObject in jObject)
+			for (var i = 0; i < jObject.length; i++)
 			{
-				var go = GameObjectFactory(jObject[gameObject]["blueprint"]);
+				var go = GameObjectFactory(jObject[i]["blueprint"]);
+				go.tag = jObject[i]["tag"];
+				if (jObject[i]["transform"]["Position"] != null){
 
-				if (jObject[gameObject]["transform"]["Position"] != null){
-
-					go.transform.Position.x = parseInt(jObject[gameObject]["transform"]["Position"]["x"]);
-					go.transform.Position.y = parseInt(jObject[gameObject]["transform"]["Position"]["y"]);
+					go.transform.Position.x = parseInt(jObject[i]["transform"]["Position"]["x"]);
+					go.transform.Position.y = parseInt(jObject[i]["transform"]["Position"]["y"]);
 				}
 				
-				if (jObject[gameObject]["transform"]["Velocity"] != null){
+				if (jObject[i]["transform"]["Velocity"] != null){
 
-					go.transform.Velocity.x = parseInt(jObject[gameObject]["transform"]["Velocity"]["x"]);
-					go.transform.Velocity.y = parseInt(jObject[gameObject]["transform"]["Velocity"]["y"]);
+					go.transform.Velocity.x = parseInt(jObject[i]["transform"]["Velocity"]["x"]);
+					go.transform.Velocity.y = parseInt(jObject[i]["transform"]["Velocity"]["y"]);
 				}
 			}
 		}
