@@ -267,13 +267,16 @@ function save () {
 		if (_currentlyChanging == "collide")
 		{
 			_selectedObject.setOnCollide($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "init")
 		{
 			_selectedObject.setOnInit($("#text").val());
+			o["funct"]["OnInit"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "update"){
 			_selectedObject.setOnUpdate($("#text").val());
+			o["funct"]["OnUpdate"] = $("#text").val();
 		}
 	}
 	else{
@@ -287,7 +290,7 @@ function load () {
 	{
 		if (_currentlyChanging == "onCollide")
 		{
-			$("#text").val(this.getOnCollide());
+			$("#text").val(this.getOnCollide())
 		}
 		else if(_currentlyChanging == "onInit")
 		{
@@ -399,10 +402,24 @@ function saveJSON (argument) {
 		alert("No blueprint selected: "+_selectedBlueprint);
 		return false;
 	}
+
+	if (_currentlyChanging == "collide")
+	{
+		o["funct"]["OnCollide"] = $("#text").val();
+	}
+	else if(_currentlyChanging == "init")
+	{
+		o["funct"]["OnInit"] = $("#text").val();
+	}
+	else if(_currentlyChanging == "update"){
+		o["funct"]["OnUpdate"] = $("#text").val();
+	}
+
 	str = JSON.stringify(o);
 	//alert(str);
 	//save to file
-	$.post("/", { filename: _selectedBlueprint, data: str});
+	$.post("/", { filename: _selectedBlueprint+".json", data: str});
+	alert("Saved json");
 }
 
 function loadJSON (filename) {

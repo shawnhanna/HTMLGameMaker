@@ -11,7 +11,7 @@ function init()
 	
 	Input.Init();
 	
-	loadScene("scene.json");
+	loadScene("Engine/scene.json");
 	
 	IntervalID = setInterval(gameLoop, 1000 / 30);
 }

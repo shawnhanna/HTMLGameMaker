@@ -38,7 +38,7 @@ function GameObjectFactory(filename)
 			// return gameObject;
 		// }
 	// }
-	request.open("GET", filename, false);
+	request.open("GET", "Engine/"+filename, false);
 	request.send();
 	var jObject = JSON.parse(request.responseText);
 	for (component in jObject)

@@ -32,7 +32,7 @@ function Texture2D()
 	
 	this.load = function(filename)
 	{
-		texture.src = filename;
+		texture.src = "Engine/"+filename;
 	}
 	
 	this.Update = function(ctx)
