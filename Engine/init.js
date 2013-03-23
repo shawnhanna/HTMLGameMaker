@@ -69,10 +69,5 @@ function gameLoop()
 		{
 			SceneGraph.splice(i, 1);
 		}
-		if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
-		{
-			objectSelected(SceneGraph[i]);
-			console.log(SceneGraph[i]);
-		}
 	}
 }
