@@ -4,6 +4,7 @@ function GameObject()
 	var components = new Array();
 	this.transform = new Transform();
 	this.Collider = new Rect();
+	this.sound;
 	
 	this.doRemove = false;
 	this.tag = "";
@@ -68,7 +69,7 @@ function GameObject()
 		this.transform.Position.x += this.transform.Velocity.x;
 		this.transform.Position.y += this.transform.Velocity.y;
 	}
-	
+	GameObject.interval = 0;
 	this.OnCollide = function(collider)
 	{
 		eval(oncollide);

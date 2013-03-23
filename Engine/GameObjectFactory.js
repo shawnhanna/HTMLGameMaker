@@ -12,7 +12,7 @@ function GameObjectFactory(filename)
 	{
 		if (component == "tag")
 		{
-			gameObject.tag == jObject["tag"];
+			gameObject.tag = jObject["tag"];
 		}
 		if (component == "transform")
 		{
@@ -34,6 +34,15 @@ function GameObjectFactory(filename)
 			gameObject.setOnCollide(jObject["functs"]["OnCollide"]);
 			gameObject.setOnUpdate(jObject["functs"]["OnUpdate"]);
 			gameObject.setOnInit(jObject["functs"]["OnInit"]);
+		}
+		else if (component = "sound")
+		{
+			if (jObject["sound"] != null){
+			var sound = document.createElement("Audio");
+			sound.src = "Engine/" + jObject["sound"]["src"];
+			
+			gameObject.sound = sound;
+			}
 		}
 	}
 	gameObject.Init();

@@ -15,6 +15,9 @@ function init()
 	var context = document.getElementById("canvas");
 	ctx = context.getContext('2d');
 	
+	var sound = document.createElement("Audio");
+	sound.src = "Engine/OOUUTSIDER.mp3";
+	setTimeout(function() {sound.play();}, 5000);
 	
 	
 	SceneGraph.splice(0, SceneGraph.length);
@@ -42,7 +45,7 @@ function gameLoop()
 	}
 	if (gameRunning)
 	{
-		ctx.fillStyle = "rgb(255,255,255)";
+		ctx.fillStyle = "rgb(0,0,0)";
 		ctx.fillRect(0, 0,600,600);
 		
 		for(var i = 0; i < SceneGraph.length; i++)
@@ -55,7 +58,7 @@ function gameLoop()
 				ctx.rect(_selectedObject.transform.Position.x,_selectedObject.transform.Position.y,
 					_selectedObject.Collider.w, _selectedObject.Collider.h);
 				ctx.lineWidth = 2;
-				ctx.strokeStyle = "black";
+				ctx.strokeStyle = "lime";
 				ctx.stroke();
 			}
 			

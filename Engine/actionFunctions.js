@@ -145,6 +145,9 @@ function hideAllActionButtons (argument) {
 	$("#addVelX").hide();
 	$("#addVelY").hide();
 	$("#addVelA").hide();
+	
+	$("#delayMillis").hide();
+	$("#endDelay").hide();
 
 	$("#addPosRelX").hide();
 	$("#addPosRelY").hide();
@@ -176,6 +179,9 @@ function showAllActionButtons (argument) {
 	$("#addVelX").show();
 	$("#addVelY").show();
 	$("#addVelA").show();
+	
+	$("#delayMillis").show();
+	$("#endDelay").show();
 
 	$("#addPosRelX").show();
 	$("#addPosRelY").show();
@@ -207,6 +213,21 @@ function hideUpdateButtons (argument) {
 	$("#ifKeyPressed").hide();
 	$("#ifKeyUp").hide();
 	$("#ifKeyDown").hide();
+}
+
+function delayMillis()
+{
+	$("#text").val ($("#text").val() + "setTimeout( function() { ");
+	createArray();
+}
+
+function endDelay()
+{
+	var time = prompt("Delay for how long?", "100");
+	if (time == null) return false;
+	
+	$("#text").val($("#text").val() + "}, "+ time+");");
+	createArray();
 }
 
 function addPosRelativeX () {
@@ -463,7 +484,7 @@ function save () {
 		}
 		else if(_currentlyChanging == "update"){
 			_selectedObject.setOnUpdate($("#text").val());
-			console.log(o);
+			
 			o["functs"]["OnUpdate"] = $("#text").val();
 		}
 	}
@@ -491,7 +512,7 @@ function load () {
 	}
 	else if (_selectedBlueprint)
 	{
-		console.log("bp = "+_selectedBlueprint);
+		
 		$.ajax({
 			url:    'blueprints/'+_selectedBlueprint+".json",
 			dataType: 'json',
@@ -658,7 +679,7 @@ document.getElementById('right').innerHTML = str;
 function getSceneGraph (argument) {
 	str = "<h2>Objects</h2><br>";
 	str += '<button onclick=\'saveScene();\'>Save Scene</button><br>';
-	console.log(SceneGraph);
+	
 	if (SceneGraph != null){
 		str += "<table>";
 		for (var i = SceneGraph.length - 1; i >= 0; i--) {

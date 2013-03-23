@@ -51,27 +51,7 @@ Input.Init = function()
 			_selectedObject.transform.Position.y = Input.mousePos.y;
 		}
 	});
-	
-	// $('#canvas').click(function(e)
-	// {
-		// Input.mousePos.x = e.offsetX;
-		// Input.mousePos.y = e.offsetY;
-		// for (var i = 0; i < SceneGraph.length; i++)
-		// {
-			// if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
-			// {
-				// if (_selectedObject == SceneGraph[i])
-				// {
-				//	begin drag
-				// }
-				// else
-				// {
-					// objectSelected(SceneGraph[i]);
-				// }
-			// }
-			
-		// }
-	// });
+
 	window.addEventListener("keydown", addKey);
 	window.addEventListener("keyup", removeKey);
 }
