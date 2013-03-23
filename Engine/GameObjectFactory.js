@@ -49,8 +49,12 @@ function GameObjectFactory(filename)
 		}
 		if (component == "transform")
 		{
-			gameObject.transform.Position.construct(jObject["transform"]["Position"]["x"], jObject["transform"]["Position"]["y"]);
-			gameObject.transform.Velocity.construct(jObject["transform"]["Velocity"]["x"], jObject["transform"]["Velocity"]["y"]);
+			if (jObject["transform"]["Velocity"] != null) {
+				gameObject.transform.Position.construct(jObject["transform"]["Position"]["x"], jObject["transform"]["Position"]["y"]);
+			}
+			if (jObject["transform"]["Velocity"] != null){
+				gameObject.transform.Velocity.construct(jObject["transform"]["Velocity"]["x"], jObject["transform"]["Velocity"]["y"]);
+			}
 		}
 		else if (component == "texture")
 		{
