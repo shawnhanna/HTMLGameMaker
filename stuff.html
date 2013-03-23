@@ -30,7 +30,6 @@
 			str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
 			document.getElementById('buttonsTable').innerHTML = str;
 			document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
-			changeEditingState("create_blueprint");
 		}
 		else
 		{
@@ -56,7 +55,7 @@
 
 	</script>
 </head>
-<body onload="init();redrawBlueprints();">
+<body onload="init();getBP();">
 
 	<div id="content">
 		<div class="navbar navbar-inverse navbar-fixed-top">

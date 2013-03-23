@@ -48,7 +48,10 @@ function changeEditingState (state) {
 	{
 		hideAllActionButtons();
 	}
-	document.getElementById('spriteName').innerHTML = "Editing object function ("+_currentlyChanging+") of type: "+_selectedObject.blueprint;
+	if (_selectedObject != null)
+	{
+		document.getElementById('spriteName').innerHTML = "Editing object function ("+_currentlyChanging+") of type: "+_selectedObject.blueprint;
+	}
 	load();
 }
 
@@ -63,6 +66,17 @@ function objectSelected (argument) {
 function blueprintSelected (argument) {
 	_selectedObject = null;
 	_selectedBlueprint = argument;
+	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
+
+	str =  '<table class="table-nonfluid"><tbody><tr><td>';
+	str += '<button id="changeNameBut" class="btn btn-inverse what "onclick="changeName();">Change Name</button></td>';
+	str += '<td><button id="changeTagBut" class="btn btn-inverse what "onclick="changeTag();">Change Tag</button></td>';
+	str += '<td><button id="initVelBut" class="btn btn-inverse what "onclick="changeInitVelocity();">initial velocity</button></td>';
+	str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
+	str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
+	str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
+	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
+	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
 }
 
@@ -365,6 +379,7 @@ function redrawTextArea()
 
 /// saves the callback functions to the callbacks
 function save () {
+	alert("Saving");
 	createArray();
 
 	if (_selectedBlueprint)
@@ -378,17 +393,17 @@ function save () {
 		if (_currentlyChanging == "collide")
 		{
 			_selectedObject.setOnCollide($("#text").val());
-			o["funct"]["OnCollide"] = $("#text").val();
+			o["functs"]["OnCollide"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "init")
 		{
 			_selectedObject.setOnInit($("#text").val());
-			o["funct"]["OnInit"] = $("#text").val();
+			o["functs"]["OnInit"] = $("#text").val();
 		}
 		else if(_currentlyChanging == "update"){
 			_selectedObject.setOnUpdate($("#text").val());
 			console.log(o);
-			o["funct"]["OnUpdate"] = $("#text").val();
+			o["functs"]["OnUpdate"] = $("#text").val();
 		}
 	}
 	else{
@@ -400,19 +415,41 @@ function save () {
 function load () {
 	if(_currentlyChanging != null)
 	{
-		if (_currentlyChanging == "collide")
+		if (_selectedObject){
+			if (_currentlyChanging == "collide")
+			{
+				$("#text").val(_selectedObject.getOnCollide());
+			}
+			else if(_currentlyChanging == "init")
+			{
+				$("#text").val(_selectedObject.getOnInit());
+			}
+			else if(_currentlyChanging == "update"){
+				$("#text").val(_selectedObject.getOnUpdate());
+			}
+			createArray();
+			return true;
+		}
+		else if (_selectedBlueprint)
 		{
-			$("#text").val(_selectedObject.getOnCollide())
+			console.log("bp = "+_selectedBlueprint);
+			$.get("blueprints/"+_selectedBlueprint+".json", function(data) {
+				o = data;
+				if (_currentlyChanging == "collide")
+				{
+					$("#text").val(o["functs"]["OnCollide"]);
+				}
+				else if(_currentlyChanging == "init")
+				{
+					$("#text").val(o["functs"]["OnInit"]);
+				}
+				else if(_currentlyChanging == "update"){
+					$("#text").val(o["functs"]["OnUpdate"]);
+				}
+				createArray();
+			});
+			return true;
 		}
-		else if(_currentlyChanging == "init")
-		{
-			$("#text").val(_selectedObject.getOnInit());
-		}
-		else if(_currentlyChanging == "update"){
-			$("#text").val(_selectedObject.getOnUpdate());
-		}
-		createArray();
-		return true;
 	}
 	else
 	{
@@ -434,7 +471,7 @@ function changeTag() {
 	if (newTag != o["tag"])
 	{
 		o["tag"] = newTag;
-		saveJSON();
+		save();
 	}
 }
 
@@ -443,7 +480,15 @@ function changeInitVelocity() {
 	var newVelY = prompt("what is the new velocity (Y)", o["transform"]["Velocity"]["y"]);
 	o["transform"]["Velocity"]["y"] = newVelY;
 	o["transform"]["Velocity"]["x"] = newVelX;
-	saveJSON();
+	save();
+}
+
+function changeInitPosition() {
+	var newVelX = prompt("what is the new position (X)", o["transform"]["Position"]["x"]);
+	var newVelY = prompt("what is the new position (Y)", o["transform"]["Position"]["y"]);
+	o["transform"]["Position"]["y"] = newVelY;
+	o["transform"]["Position"]["x"] = newVelX;
+	save();
 }
 
 function createBlueprint (argument) {
@@ -479,14 +524,19 @@ function createBlueprint (argument) {
 			{
 				"src":"img.png"
 			},
-			"funct":
+			"functs":
 			{
 				"OnCollide":"",
 				"OnInit":"",
 				"OnUpdate":""
 			}
 		}
-		saveJSON();
+		save();
+	}
+	else
+	{
+		alert("ERROR: you must enter a valid blueprint name");
+		return false;
 	}
 }
 
@@ -500,31 +550,46 @@ function saveJSON (argument) {
 
 	if (_currentlyChanging == "collide")
 	{
-		o["funct"]["OnCollide"] = $("#text").val();
+		o["functs"]["OnCollide"] = $("#text").val();
 	}
 	else if(_currentlyChanging == "init")
 	{
-		o["funct"]["OnInit"] = $("#text").val();
+		o["functs"]["OnInit"] = $("#text").val();
 	}
 	else if(_currentlyChanging == "update"){
-		o["funct"]["OnUpdate"] = $("#text").val();
+		o["functs"]["OnUpdate"] = $("#text").val();
 	}
-
 	str = JSON.stringify(o);
 	//alert(str);
 	//save to file
-	$.post("/", { filename: _selectedBlueprint+".json", data: str});
+	$.post("/", { filename: "/blueprints/"+_selectedBlueprint+".json", data: str});
 }
 
 function redrawBlueprints (bps) {
+	bps = JSON.parse(bps);
 	str = "<h2>Blueprints</h2><br>";
 	str += '<button onclick=\'updateButtons("create_blueprint");\'>Create blueprint</button><br>';
 	if (bps!= null){
 		str += "<ul>";
 		for (var i = bps.length - 1; i >= 0; i--) {
-			str += "<li>"+bps[i]+"</li>";
+			console.log("Got stuff: "+bps[i]);
+			bps[i] = bps[i].substr(0, bps[i].length-5);
+			console.log("Got stuff: "+bps[i]);
+			str += '<li><a href="#" onclick=\'blueprintSelected("';
+			str+=bps[i];
+			str += '")\'>'+bps[i]+"</a></li>";
 		};
 		str += "</ul>";
 	}
+	else
+	{
+		alert("NO blueprints found");
+	}
 	document.getElementById('right').innerHTML = str;
+}
+
+function getBP () {
+	$.get("/getBP", function(data){
+		redrawBlueprints(data);
+	});
 }
