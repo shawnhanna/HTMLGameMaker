@@ -69,7 +69,19 @@ function objectSelectedIndex (arg) {
 
 function deleteObjectIndex (arg) {
 	SceneGraph.splice(arg,1);
-	getSceneGraph();	
+}
+
+function addObject () {
+	if (_selectedBlueprint)
+	{
+		var x = GameObjectFactory(_selectedBlueprint+".json");
+		SceneGraph.push(x);
+		//alert("Created object");
+	}
+	else
+	{
+		alert("NO _selectedBlueprint");
+	}
 }
 
 function blueprintSelected (argument) {
@@ -86,6 +98,7 @@ function blueprintSelected (argument) {
 	str += '<td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
 	str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td>';
 	str += '<td><button id="changeImageButton" type="file" class="btn btn-inverse what" onclick=\'changeImage();\'>Change default Image</button></td></tr>';
+	str += '<tr><td><button id="InstantiateObjectButton" class="btn btn-inverse what" onclick=\'addObject();\'>Add this object</button></td></tr>';
 	str += '</tbody></table>';
 	document.getElementById('buttonsTable').innerHTML = str;
 	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
