@@ -333,6 +333,8 @@ function redrawTextArea()
 
 /// saves the callback functions to the callbacks
 function save () {
+	saveJSON();
+	return false;
 	createArray();
 
 	if(_currentlyChanging != null)
@@ -385,4 +387,34 @@ function load () {
 		alert("Error: no callback function overwriting specified");
 		return false;
 	}
+}
+
+function saveJSON (argument) {
+	var o = {
+		"tranform":
+		{
+			"Position":
+			{
+				"x":10,
+				"y":20
+			},
+			"Velocity":
+			{
+				"x":10,
+				"y":20
+			}
+		},
+		"texture":
+		{
+			"src":"img.png"
+		},
+		"funct":
+		{
+			"OnCollide":$("#text").val(),
+			"OnInit":$("#text").val(),
+			"OnUpdate":$("#text").val()
+		}
+	}
+	str = JSON.stringify(o);
+	alert(str);
 }
