@@ -49,11 +49,13 @@ function changeEditingState (state) {
 function objectSelected (argument) {
 	_selectedBlueprint = null;
 	_selectedObject = argument;
+	document.getElementById('spriteName').innerHTML = "Editing object of type: "+_selectedObject.blueprint;
 }
 
 function blueprintSelected (argument) {
 	_selectedObject = null;
 	_selectedBlueprint = argument;
+	document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
 }
 
 function showUpdateButtons (argument) {
@@ -389,6 +391,7 @@ function createBlueprint (argument) {
 		str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
 		str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
 		document.getElementById('buttonsTable').innerHTML = str;
+		document.getElementById('spriteName').innerHTML = "Editing: "+_selectedBlueprint;
 		changeEditingState("create_blueprint");
 
 		saveJSON();
@@ -435,4 +438,15 @@ function loadJSON (filename) {
 	}
 	request.open("GET", filename, true);
 	request.send();
+}
+
+function redrawBlueprints (bps) {
+	str = "<h2>Blueprints</h2><br>";
+	str += '<button onclick='updateButtons("create_blueprint");'>Create blueprint</button><br>';
+	str += "<ul>";
+	for (var i = bps.length - 1; i >= 0; i--) {
+		str += "<li>"+bps[i]+"</li>";
+	};
+	str += "</ul>";
+	document.getElementById('bpdiv').innerHTML = 
 }
