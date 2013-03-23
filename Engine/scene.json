@@ -1,0 +1,53 @@
+{
+	"object1": 
+	{
+		"blueprint": "thing.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "100",
+				"y": "100"
+			},
+			"Velocity":
+			{
+				"x": "0",
+				"y": "0"
+			}
+		}
+	},
+	"object2": 
+	{
+		"blueprint": "thing.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "150",
+				"y": "40"
+			},
+			"Velocity":
+			{
+				"x": "0",
+				"y": "0"
+			}
+		}
+	},
+	"object3": 
+	{
+		"blueprint": "thing2.json",
+		"transform":
+		{
+			"Position":
+			{
+				"x": "20",
+				"y": "100"
+			},
+			"Velocity":
+			{
+				"x": "0",
+				"y": "0"
+			}
+		}
+	}
+}

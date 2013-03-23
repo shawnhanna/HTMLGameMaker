@@ -432,7 +432,7 @@ function saveJSON (argument) {
 }
 
 function loadJSON (filename) {
-	filename = "Engine/thing.json";
+	filename = "thing.json";
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function()
 	{
@@ -440,7 +440,7 @@ function loadJSON (filename) {
 		{
 			var jObject = JSON.parse(request.responseText);
 			o = jObject;
-
+			console.log(JSON.stringify(o));
 		}
 	}
 	request.open("GET", filename, true);
