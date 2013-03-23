@@ -46,18 +46,17 @@ function changeEditingState (state) {
 	}
 	else if(_currentlyChanging == "view")
 	{
-		hideInitButtons();
-		hideUpdateButtons();
-		hideCollideButtons();
 		hideAllActionButtons();
 	}
+	document.getElementById('spriteName').innerHTML = "Editing object function ("+_currentlyChanging+") of type: "+_selectedObject.blueprint;
+	$("#text").val("");
 }
 
 ///argument is the object that is selected
 function objectSelected (argument) {
 	_selectedBlueprint = null;
 	_selectedObject = argument;
-	document.getElementById('spriteName').innerHTML = "Editing object of type: "+_selectedObject.blueprint;
+	document.getElementById('spriteName').innerHTML = "Editing object function ("+_currentlyChanging+") of type: "+_selectedObject.blueprint;
 	updateButtons("view");
 }
 
@@ -147,6 +146,7 @@ function showAllActionButtons (argument) {
 
 function hideInitButtons (argument) {
 }
+
 function hideUpdateButtons (argument) {
 	$("#ifKeyPressed").hide();
 	$("#ifKeyUp").hide();

@@ -36,19 +36,6 @@
 				document.getElementById('buttonsTable').innerHTML = str;
 				changeEditingState(state);
 			}
-			else{
-				if (state == "view"){
-					str =  '<table class="table-nonfluid"><tbody><tr>';
-					str += '<td><button id="changeTagBut" class="btn btn-inverse what "onclick="changeTag();">Change Tag</button></td>';
-					str += '<td><button id="initVelBut" class="btn btn-inverse what "onclick="();">initial velocity</button></td>';
-					str += '<td><button id="initPosBut" class="btn btn-inverse what "onclick="changeInitPosition();">initial Position</button></td>';
-					str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
-					str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
-					str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
-					document.getElementById('buttonsTable').innerHTML = str;
-					changeEditingState("create_blueprint");
-				}
-			}
 		}
 	}
 
@@ -72,8 +59,7 @@
 	
 	<div id="main">
 
-		<canvas id="canvas" height="200" width="200">
-			
+		<canvas id="canvas" height="256" width="540">
 		</canvas>
 		
 		<div class="left">
