@@ -1,0 +1,26 @@
+{
+	"tag": "bullet",
+	"transform":
+	{
+		"Position" 
+		{
+			"x":"0",
+			"y":"0"
+		},
+		"Velocity"
+		{
+			"x":"0",
+			"y":"0"
+		}
+	},
+	"texture":
+	{
+		"src": "bullet.png"
+	},
+	"functs":
+	{
+		"OnInit":"this.transform.Velocity.y = -3;",
+		"OnUpdate":"",
+		"OnCollide":""
+	}
+}

@@ -23,5 +23,11 @@ app.get('/getBP', function(req, res) {
 	});
 });
 
+app.get('/delete', function(req, res) {
+	file = req.query["filename"];
+	fs.unlink("blueprints/"+file);
+	res.send("deleted " + file);
+});
+
 app.listen(8080);
 console.log("Listening on port 8080");
