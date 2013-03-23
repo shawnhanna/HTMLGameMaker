@@ -26,6 +26,14 @@ Input.Init = function()
 		Input.mousePos.x = e.offsetX;
 		Input.mousePos.y = e.offsetY;
 		console.log(e.offsetX, e.offsetY);
+		for (var i = 0; i < SceneGraph.length; i++)
+		{
+			console.log(SceneGraph[i].Collider);
+			if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
+			{
+				console.log("HIT");
+			}
+		}
 	});
 	window.addEventListener("keydown", addKey);
 	window.addEventListener("keyup", removeKey);

@@ -1,5 +1,6 @@
 function GameObject()
 {
+	this.blueprint = "";
 	var components = new Array();
 	this.transform = new Transform();
 	this.Collider = new Rect();

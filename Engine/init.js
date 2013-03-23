@@ -13,7 +13,6 @@ function init()
 	
 	loadScene("Engine/scene.json");
 
-	getBlueprints();
 
 	IntervalID = setInterval(gameLoop, 1000 / 30);
 }
@@ -74,6 +73,7 @@ function gameLoop()
 		if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
 		{
 			objectSelected(SceneGraph[i]);
+			console.log(SceneGraph[i]);
 		}
 	}
 }
