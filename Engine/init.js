@@ -13,6 +13,8 @@ function init()
 	
 	loadScene("Engine/scene.json");
 
+	getBlueprints();
+
 	IntervalID = setInterval(gameLoop, 1000 / 30);
 }
 
