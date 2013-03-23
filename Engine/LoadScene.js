@@ -10,11 +10,7 @@ function loadScene(filename)
 			
 			for (gameObject in jObject)
 			{
-				console.log(gameObject);
-				
 				var go = GameObjectFactory(jObject[gameObject]["blueprint"]);
-				
-				console.log(go);
 
 				if (jObject[gameObject]["transform"]["Position"] != null){
 

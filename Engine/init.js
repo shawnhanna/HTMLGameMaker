@@ -59,7 +59,6 @@ function gameLoop()
 				if (SceneGraph[i].Collider.intersects(SceneGraph[j].Collider))
 				{
 					SceneGraph[i].OnCollide(SceneGraph[j]);
-					//SceneGraph[j].OnCollide(SceneGraph[i]);
 				}
 			}
 		}
@@ -69,6 +68,10 @@ function gameLoop()
 		if (SceneGraph[i].doRemove)
 		{
 			SceneGraph.splice(i, 1);
+		}
+		if (SceneGraph[i].Collider.intersectsPoint(Input.mousePos))
+		{
+			objectSelected(SceneGraph[i]);
 		}
 	}
 }

@@ -16,4 +16,15 @@ function Rect()
 		}
 		return false;
 	}
+	this.intersectsPoint = function(other)
+	{
+		if (other.x > this.x && other.x < this.x + this.h)
+		{
+			if (other.y < this.y + this.h && other.y > this.y)
+			{
+				return true;
+			}
+		}	
+		return false;
+	}
 }

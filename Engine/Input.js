@@ -21,7 +21,12 @@ Input.Init = function()
 		Input.keysDown.splice(Input.keysDown.indexOf(key), 1);
 	}
 
-	
+	$('#canvas').click(function(e)
+	{
+		Input.mousePos.x = e.offsetX;
+		Input.mousePos.y = e.offsetY;
+		console.log(e.offsetX, e.offsetY);
+	});
 	window.addEventListener("keydown", addKey);
 	window.addEventListener("keyup", removeKey);
 }
