@@ -17,64 +17,58 @@ var _selectedBlueprint = null;
 // Variable that sets which event you are currently editing, such as "onCollide", "onInit", and "onUpdate"
 var _currentlyChanging = null;
 
-function instantiateObject(argument) {
-	if (argument == null)
-	{
-		alert("ERROR: instantiateObject run w/o a selected blueprint");
-		return false;
-	}
-	else
-	{
-		///TODO: add instantiation code
-		//load from json file
-		//return gameObject
-	}
-}
+//object that holds all the json properties
+var o;
 
-function destroySelf ()
-{
-	if (this == null)
+function changeEditingState (state) {
+	_currentlyChanging = state;
+	if (_currentlyChanging == "update")
 	{
-		alert("ERROR: destroy self run w/o a self object");
-		return false;
+		//show the key press button(s)
+		hideInitButtons();
+		hideCollideButtons();
+		showUpdateButtons();
 	}
-	else
+	else if (_currentlyChanging == "init")
 	{
-		this.doRemove = true;
+		// show initialization buttons?
+		hideUpdateButtons();
+		hideCollideButtons();
+		showInitButtons();
 	}
-}
-
-function destroyCollider ()
-{
-	if (collidingObject == null)
+	else if (_currentlyChanging == "collide")
 	{
-		alert("ERROR: destroy collider run w/o a collidingObject");
-		return false;
-	}
-	else
-	{
-		collidingObject.doRemove = true;
-	}
-}
-
-function setOnCollide()
-{
-	if (_selectedBlueprint == null)
-	{
-		alert("ERROR: setOnCollide run w/o a selected blueprint");
-		return false;
-	}
-	else
-	{
-		$('#test').off('onCollide');
-		$("#test").on("onCollide", function()
-		{
-			eval($("#text").val());
-		});
+		//show the collide buttons
+		hideInitButtons();
+		hideUpdateButtons();
+		showCollideButtons();
 	}
 }
 
 
+function showUpdateButtons (argument) {
+	$("#ifKeyPressed").show();
+	$("#ifKeyUp").show();
+	$("#ifKeyDown").show();
+}
+function showCollideButtons (argument) {
+	$("#ifColliderTag").show();
+	$("#destroyCollider").show();
+}
+function showInitButtons (argument) {
+}
+
+function hideCollideButtons (argument) {
+	$("#ifColliderTag").hide();
+	$("#destroyCollider").hide();
+}
+function hideInitButtons (argument) {
+}
+function hideUpdateButtons (argument) {
+	$("#ifKeyPressed").hide();
+	$("#ifKeyUp").hide();
+	$("#ifKeyDown").hide();
+}
 
 function setVelocityX(speed)
 {
@@ -279,11 +273,31 @@ function getFunctionFromCommands() {
 	return $("#text").val();
 }
 
-function addInputKeyDown () {
+function addInputKeyPressed () {
 	var keyNum = prompt("What key? (use only alphanumeric)","w");
 	var num = keyNum.charCodeAt(0);
 	//alert("that is ascii value: "+num);
 	str = "var isPressed = Input.getKey("+num+")\n";
+	str = str+"if (isPressed){\n";
+
+	$("#text").val ( $("#text").val() + str);
+}
+
+function addInputKeyDown () {
+	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	var num = keyNum.charCodeAt(0);
+	//alert("that is ascii value: "+num);
+	str = "var isPressed = Input.getKeyDown("+num+")\n";
+	str = str+"if (isPressed){\n";
+
+	$("#text").val ( $("#text").val() + str);
+}
+
+function addInputKeyUp () {
+	var keyNum = prompt("What key? (use only alphanumeric)","w");
+	var num = keyNum.charCodeAt(0);
+	//alert("that is ascii value: "+num);
+	str = "var isPressed = Input.getKeyUp("+num+")\n";
 	str = str+"if (isPressed){\n";
 
 	$("#text").val ( $("#text").val() + str);
@@ -333,25 +347,30 @@ function redrawTextArea()
 
 /// saves the callback functions to the callbacks
 function save () {
-	saveJSON();
-	return false;
 	createArray();
 
 	if(_currentlyChanging != null)
 	{
-		if (_currentlyChanging == "onCollide")
+		if (_currentlyChanging == "collide")
 		{
 			this.setOnCollide($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
-		else if(_currentlyChanging == "onInit")
+		else if(_currentlyChanging == "init")
 		{
 			this.setOnInit($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
-		else if(_currentlyChanging == "onUpdate"){
+		else if(_currentlyChanging == "update"){
 			this.setOnUpdate($("#text").val());
+			o["funct"]["OnCollide"] = $("#text").val();
 		}
 		else{
 			alert("error: not sure what callback we are creating");
+		}
+		if (_selectedBlueprint)
+		{
+			saveJSON();
 		}
 	}
 	else
@@ -389,41 +408,42 @@ function load () {
 	}
 }
 
-function createBlueprint (argument) {
-	var name = prompt("What is the name of your blueprint");
+function createBlueprint () {
+	var name = prompt("What is the name of your blueprint"," hi?");
 	if (name != null)
 	{
 		_selectedBlueprint = name;
-		saveJSON();
 
 		o = {
-		"tranform":
-		{
-			"Position":
+			"tranform":
 			{
-				"x":0,
-				"y":0
+				"Position":
+				{
+					"x":0,
+					"y":0
+				},
+				"Velocity":
+				{
+					"x":0,
+					"y":0
+				}
 			},
-			"Velocity":
+			"texture":
 			{
-				"x":0,
-				"y":0
+				"src":"img.png"
+			},
+			"funct":
+			{
+				"OnCollide":"",
+				"OnInit":"",
+				"OnUpdate":""
 			}
-		},
-		"texture":
-		{
-			"src":"img.png"
-		},
-		"funct":
-		{
-			"OnCollide":"",
-			"OnInit":"",
-			"OnUpdate":""
 		}
-	}
+		saveJSON();
+
 	}
 }
-var o;
+
 ///save blueprint in json format
 function saveJSON (argument) {
 	str = JSON.stringify(o);
@@ -440,7 +460,6 @@ function loadJSON (filename) {
 		{
 			var jObject = JSON.parse(request.responseText);
 			o = jObject;
-			console.log(JSON.stringify(o));
 		}
 	}
 	request.open("GET", filename, true);

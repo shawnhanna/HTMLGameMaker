@@ -10,11 +10,6 @@
 		createArray();
 	}
 
-
-	function createBlueprint () {
-		//todo: add code for creation of new blueprint
-	}
-
 	</script>
 </head>
 <body onload="hideInstantiated()">
@@ -49,15 +44,20 @@
 
 <br>
 <!-- Only if in update set of buttons -->
-<button id="ifColliderTag" onclick="addInputKeyDown();">if (key pressed == ''){} </button>
+<button id="ifKeyPressed" onclick="addInputKeyPressed();">if (key pressed){} </button>
+<button id="ifKeyDown" onclick="addInputKeyDown();">if (key down){} </button>
+<button id="ifKeyUp" onclick="addInputKeyUp();">if (key up){} </button>
 
 <br>
 <button onclick="endIf()">End If</button>
 <br>
 <button onclick="save()">Save</button>
-<br>
 <button onclick="createBlueprint()">Create blueprint</button>
 <button onclick="loadJSON()">load blueprint</button>
+<br>
+<button onclick='changeEditingState("collide");'>Modify oncollide</button>
+<button onclick='changeEditingState("init");'>Modify oninit</button>
+<button onclick='changeEditingState("update");'>Modify onupdate</button>
 </div>
 </body>
 </html>
