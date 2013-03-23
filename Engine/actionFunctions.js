@@ -92,6 +92,7 @@ function blueprintSelected (argument) {
 }
 
 function changeImage () {
+	load();
 	var ret = prompt("Please enter an image filename","");
 	if (_selectedBlueprint)
 	{
@@ -101,6 +102,7 @@ function changeImage () {
 	{
 		_selectedObject.texture.img = ret;
 	}
+	save();
 }
 
 function showUpdateButtons (argument) {
