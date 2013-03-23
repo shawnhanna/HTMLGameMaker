@@ -1,0 +1,1 @@
+[{"blueprint":"ship.json","transform":{"Position":{"x":251,"y":331},"Velocity":{"x":0,"y":0}},"Collider":{"x":251,"y":331,"w":32,"h":32},"doRemove":false,"tag":""},{"blueprint":"thing.json","transform":{"Position":{"x":253,"y":43},"Velocity":{"x":0,"y":0}},"Collider":{"x":253,"y":43,"w":32,"h":32},"doRemove":false,"tag":""}]

@@ -1,0 +1,20 @@
+{
+  "transform": 
+  {
+	"Position":
+	{
+		"x": "100",
+		"y": "100"
+	}
+  },
+  "texture":
+  {
+	"src":"img2.png"
+  },
+  "functs":
+  {
+	"OnInit": "console.log(\"init\");",
+	"OnUpdate": "console.log(\"update\");",
+	"OnCollide" : "console.log(\"collide\");"
+  }
+}
