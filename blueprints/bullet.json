@@ -1,1 +1,15 @@
-{"tag":"","transform":{"Position":{"x":0,"y":0},"Velocity":{"x":"1","y":"1"}},"texture":{"src":"bullet.png"},"functs":{"OnCollide":"","OnInit":"","OnUpdate":""}}
+
+{
+"tag":"bullet",
+"transform":
+{"Position":
+{"x":0,"y":0},
+"Velocity":
+{"x":"0","y":"-10"}},
+"texture":{"src":"bullet.png"},
+"functs":{"OnCollide":"",
+"OnInit":"this.transform.Velocity.y = -10;",
+"OnUpdate": "if (this.transform.Position.y < 0) { this.doRemove = true;}"
+}
+}
+
