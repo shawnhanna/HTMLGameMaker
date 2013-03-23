@@ -34,7 +34,7 @@
 						str += '<tr><td><button class="btn btn-inverse what" onclick="endIf()">End If</button></td></tr><tr><td><button class="btn btn-inverse what" onclick="save()">Save Object</button></td></tr>';
 
 						str += '<tr><td><button class="btn btn-inverse what" onclick=\'changeEditingState("collide");\'>Modify oncollide</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("init");\'>Modify oninit</button></td><td><button class="btn btn-inverse what" onclick=\'changeEditingState("update");\'>Modify onupdate</button></td></tr></tbody></table>';
-					document.getElementById('buttonsDiv').innerHTML = str;
+					document.getElementById('buttonsTable').innerHTML = str;
 					changeEditingState(state);
 				}
 			}
@@ -83,6 +83,9 @@
 						<textarea id="text" rows="10" cols="10"></textarea>
 					</div>
 					<div id="buttonsDiv">
+						<span id="spriteName"></span>
+						<div id="buttonsTable">
+						</div>
 					</div>
 				<div>	
 			</div>

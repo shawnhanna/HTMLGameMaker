@@ -388,7 +388,7 @@ function createBlueprint (argument) {
 		str += '</tr><tr><td><button id="changeEditingState0" class="btn btn-inverse what" onclick=\'updateButtons("init");\'>Change default Init</button></td>';
 		str += '<td><button id="changeEditingState1" class="btn btn-inverse what" onclick=\'updateButtons("collide");\'>Change default Collide</button></td>';
 		str += '<td><button id="changeEditingState2" class="btn btn-inverse what" onclick=\'updateButtons("update");\'>Change default Update</button></td></tr></tbody></table>';
-		document.getElementById('buttonsDiv').innerHTML = str;
+		document.getElementById('buttonsTable').innerHTML = str;
 		changeEditingState("create_blueprint");
 
 		saveJSON();

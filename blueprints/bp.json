@@ -1,0 +1,1 @@
+{"tag":"","transform":{"Position":{"x":0,"y":0},"Velocity":{"x":"4","y":"4"}},"texture":{"src":"img.png"},"funct":{"OnCollide":"","OnInit":"","OnUpdate":""}}
