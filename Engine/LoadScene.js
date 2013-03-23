@@ -23,7 +23,6 @@ function loadScene(filename)
 					go.transform.Velocity.x = parseInt(jObject[gameObject]["transform"]["Velocity"]["x"]);
 					go.transform.Velocity.y = parseInt(jObject[gameObject]["transform"]["Velocity"]["y"]);
 				}
-				SceneGraph.push(go);
 			}
 		}
 	}

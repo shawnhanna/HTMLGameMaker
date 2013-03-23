@@ -562,6 +562,12 @@ function createBlueprint (argument) {
 	}
 }
 
+function saveScene(argument)
+{
+	var toSend = JSON.stringify(SceneGraph);
+	$.post("/saveScene", {data: toSend});
+}
+
 ///save blueprint in json format
 function saveJSON (argument) {
 	if (!_selectedBlueprint)
@@ -637,4 +643,3 @@ function getBP () {
 		redrawBlueprints(data);
 	});
 }
-
