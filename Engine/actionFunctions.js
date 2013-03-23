@@ -348,6 +348,7 @@ function save () {
 		}
 		else if(_currentlyChanging == "update"){
 			_selectedObject.setOnUpdate($("#text").val());
+			console.log(o);
 			o["funct"]["OnUpdate"] = $("#text").val();
 		}
 	}
